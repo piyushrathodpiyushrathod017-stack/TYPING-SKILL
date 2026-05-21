@@ -38,9 +38,906 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-REPLACE_ME', { anonymize_ip: true });
 </script>
+<style>
+/* ===== LESSON PLAYER PREMIUM STYLES ===== */
+
+/* --- Lesson Header Premium --- */
+.lesson-player {
+  min-height: 80vh;
+}
+
+.lp-header-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.lp-header-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), #7C3AED, var(--accent));
+}
+
+.lp-breadcrumb {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.lp-breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.lp-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.lp-breadcrumb .sep {
+  color: var(--text-muted);
+  margin: 0 4px;
+}
+
+.lp-breadcrumb .current {
+  color: var(--text-secondary);
+}
+
+.lp-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.lp-title-row h1 {
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.lp-level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--primary-light);
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.lp-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.lp-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.lp-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.lp-meta-item svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+
+/* --- Progress Bar --- */
+.lp-progress-section {
+  margin-bottom: 24px;
+}
+
+.lp-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.lp-progress-step {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.lp-progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.lp-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--primary), #7C3AED);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* --- Instruction Panel --- */
+.lp-instruction-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.lp-instruction-text {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.lp-big-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.8);
+  transition: all 0.15s ease;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.lp-big-key.lp-pulse {
+  animation: lpKeyPulse 2s ease-in-out infinite;
+}
+
+@keyframes lpKeyPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.8); }
+  50% { box-shadow: 0 4px 24px rgba(37,99,235,0.15), 0 0 0 2px rgba(37,99,235,0.1); }
+}
+
+.lp-big-key.lp-correct {
+  border-color: var(--success);
+  background: #F0FDF4;
+  color: var(--success);
+  animation: lpKeyCorrect 0.3s ease;
+}
+
+@keyframes lpKeyCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.lp-big-key.lp-wrong {
+  border-color: var(--error);
+  background: #FEF2F2;
+  color: var(--error);
+  animation: lpKeyShake 0.4s ease;
+}
+
+@keyframes lpKeyShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.lp-key-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.lp-feedback {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 12px;
+  min-height: 1.4em;
+  transition: color 0.15s;
+}
+
+.lp-feedback.correct {
+  color: var(--success);
+}
+
+.lp-feedback.wrong {
+  color: var(--error);
+}
+
+/* --- Keyboard --- */
+.lp-kb-wrapper {
+  margin-bottom: 24px;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lp-kb-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 20px 16px 16px;
+  background: linear-gradient(180deg, #F3F4F6 0%, #E5E7EB 100%);
+  border: 1px solid #D1D5DB;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+  user-select: none;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.lp-kb-row {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  justify-content: center;
+}
+
+.lp-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  background: var(--card);
+  border: 1px solid #D1D5DB;
+  border-radius: 7px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--text-secondary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 0 0 1px rgba(255,255,255,0.5);
+  transition: all 0.08s ease;
+  text-transform: lowercase;
+  cursor: default;
+  flex: 0 0 auto;
+}
+
+.lp-key.lp-key-target {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(37,99,235,0.3);
+  transform: translateY(-2px);
+}
+
+.lp-key.lp-key-pressed {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.lp-key.lp-key-correct {
+  background: #DCFCE7;
+  border-color: var(--success);
+  color: var(--success);
+  animation: lpKeyFlashGreen 0.3s ease;
+}
+
+@keyframes lpKeyFlashGreen {
+  0% { background: #DCFCE7; }
+  50% { background: #BBF7D0; }
+  100% { background: #DCFCE7; }
+}
+
+.lp-key.lp-key-wrong {
+  background: #FEE2E2;
+  border-color: var(--error);
+  color: var(--error);
+  animation: lpKeyFlashRed 0.3s ease;
+}
+
+@keyframes lpKeyFlashRed {
+  0% { background: #FEE2E2; }
+  50% { background: #FECACA; }
+  100% { background: #FEE2E2; }
+}
+
+.lp-key.lp-key-space {
+  min-width: 200px;
+  max-width: 320px;
+  flex: 1;
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.lp-key.lp-key-wide {
+  min-width: 50px;
+}
+
+/* --- Finger Guide --- */
+.lp-finger-guide {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  overflow: hidden;
+}
+
+.lp-hand-side {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+.lp-hand-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  margin: 0 4px;
+  opacity: 0.5;
+}
+
+.lp-finger-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  min-width: 44px;
+}
+
+.lp-finger-dot .lp-finger-icon {
+  width: 28px;
+  height: 36px;
+  border-radius: 6px 6px 14px 14px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.lp-finger-dot .lp-finger-name {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.lp-finger-dot.lp-finger-active .lp-finger-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(37,99,235,0.3);
+  animation: lpFingerPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes lpFingerPulse {
+  0%, 100% { box-shadow: 0 2px 12px rgba(37,99,235,0.3); }
+  50% { box-shadow: 0 2px 20px rgba(37,99,235,0.5); }
+}
+
+.lp-finger-dot.lp-finger-active .lp-finger-name {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.lp-finger-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+  margin: 0 8px;
+}
+
+.lp-thumb-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.lp-thumb-area .lp-finger-icon {
+  width: 32px;
+  height: 24px;
+  border-radius: 14px 14px 6px 6px;
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.lp-thumb-area.lp-finger-active .lp-finger-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(37,99,235,0.3);
+  animation: lpFingerPulse 1.5s ease-in-out infinite;
+}
+
+.lp-thumb-area .lp-finger-name {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.lp-thumb-area.lp-finger-active .lp-finger-name {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* --- Stats Panel --- */
+.lp-stats-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lp-stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.lp-stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-mono);
+  display: block;
+  line-height: 1.2;
+}
+
+.lp-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-top: 4px;
+}
+
+/* --- Controls --- */
+.lp-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.lp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: var(--font);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.lp-btn:active {
+  transform: scale(0.97);
+}
+
+.lp-btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.lp-btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 8px 24px rgba(37,99,235,0.25);
+}
+
+.lp-btn-secondary {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.lp-btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.lp-btn-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.lp-btn-success:hover {
+  background: #15803D;
+  box-shadow: 0 8px 24px rgba(22,163,74,0.25);
+}
+
+.lp-btn-outline {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.lp-btn-outline:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.lp-btn-icon {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.lp-btn-icon:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.lp-btn-icon.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* --- Completion Screen --- */
+.lp-completion {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  text-align: center;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-lg);
+  animation: lpFadeIn 0.4s ease;
+}
+
+.lp-completion.show {
+  display: block;
+}
+
+@keyframes lpFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lp-completion-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.lp-completion h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.lp-completion .lp-desc {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.lp-completion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lp-completion-stat {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 12px;
+}
+
+.lp-completion-stat .lp-stat-value {
+  font-size: 1.6rem;
+}
+
+.lp-completion-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lp-completion-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: #F0FDF4;
+  color: var(--success);
+  margin-bottom: 16px;
+}
+
+/* --- Pause Overlay --- */
+.lp-pause-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lp-pause-overlay.show {
+  display: flex;
+}
+
+.lp-pause-overlay h2 {
+  font-size: 1.75rem;
+  color: var(--text);
+}
+
+.lp-pause-overlay p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.lp-pause-overlay .lp-btn {
+  min-width: 160px;
+}
+
+/* --- Hidden Input --- */
+.lp-hidden-input {
+  position: fixed;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  z-index: -1;
+}
+
+/* --- Error State --- */
+.lp-error-card {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.lp-error-card h2 {
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.lp-error-card p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.lp-error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Wait Screen --- */
+.lp-wait-screen {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.lp-wait-screen h2 {
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.lp-wait-screen p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* --- Flip Switch --- */
+.lp-options-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.lp-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.lp-toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background: #D1D5DB;
+  border-radius: 100px;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.lp-toggle.active {
+  background: var(--primary);
+}
+
+.lp-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.lp-toggle.active::after {
+  transform: translateX(16px);
+}
+
+/* --- Sound toggle --- */
+.lp-sound-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 768px) {
+  .lp-header-card { padding: 20px; }
+  .lp-stats-row { grid-template-columns: repeat(3, 1fr); }
+  .lp-stats-row .lp-stat-card:nth-child(4),
+  .lp-stats-row .lp-stat-card:nth-child(5) { display: none; }
+  .lp-completion-grid { grid-template-columns: repeat(2, 1fr); }
+  .lp-key { min-width: 30px; height: 32px; font-size: 0.65rem; gap: 3px; }
+  .lp-kb-row { gap: 3px; }
+  .lp-key.lp-key-space { min-width: 120px; }
+  .lp-big-key { width: 80px; height: 80px; font-size: 2rem; }
+  .lp-instruction-panel { padding: 24px 16px; }
+  .lp-finger-guide { padding: 12px; }
+  .lp-finger-dot { min-width: 34px; padding: 6px 4px; }
+  .lp-finger-dot .lp-finger-icon { width: 22px; height: 28px; }
+  .lp-finger-dot .lp-finger-name { font-size: 0.5rem; }
+  .lp-thumb-area .lp-finger-icon { width: 26px; height: 20px; }
+  .lp-meta-row { gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .lp-key { min-width: 24px; height: 28px; font-size: 0.55rem; border-radius: 5px; }
+  .lp-key.lp-key-space { min-width: 80px; }
+  .lp-kb-container { gap: 3px; padding: 12px 8px 8px; }
+  .lp-kb-row { gap: 2px; }
+  .lp-header-card { padding: 16px; }
+  .lp-stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .lp-stats-row .lp-stat-card:nth-child(5) { display: none; }
+  .lp-stat-value { font-size: 1.1rem; }
+  .lp-big-key { width: 64px; height: 64px; font-size: 1.6rem; border-width: 2px; }
+  .lp-instruction-panel { padding: 20px 12px; }
+  .lp-instruction-text { font-size: 0.85rem; }
+  .lp-completion { padding: 28px 16px; }
+  .lp-controls .lp-btn { padding: 10px 18px; font-size: 0.85rem; }
+  .lp-finger-guide { display: none; }
+}
+
+@media (max-width: 360px) {
+  .lp-key { min-width: 20px; height: 24px; font-size: 0.5rem; }
+  .lp-key.lp-key-space { min-width: 60px; }
+  .lp-header-card { padding: 12px; }
+  .lp-stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .lp-big-key.lp-pulse,
+  .lp-big-key.lp-correct,
+  .lp-big-key.lp-wrong,
+  .lp-key.lp-key-correct,
+  .lp-key.lp-key-wrong,
+  .lp-finger-dot.lp-finger-active .lp-finger-icon,
+  .lp-thumb-area.lp-finger-active .lp-finger-icon,
+  .lp-progress-fill,
+  .lp-completion {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Accessible hide */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+</style>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -65,86 +962,39 @@
     </div>
   </header>
   <main id="main-content">
-    <section class="page-header">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li><a href="lessons.html">Lessons</a></li><li aria-current="page" id="breadcrumb-lesson">Player</li></ol></nav>
-        <h1 id="player-title">Lesson</h1>
-        <p id="player-subtitle">Loading lesson...</p>
-      </div>
-    </section>
     <section class="section lesson-player">
       <div class="container">
-        <div id="lesson-error" style="display:none;text-align:center;padding:60px 20px;color:var(--text-secondary)">
-          <h2 style="color:var(--text);margin-bottom:16px">Lesson Not Found</h2>
-          <p>The requested lesson could not be found. Please select a lesson from the library.</p>
-          <a href="lessons.html" class="lesson-btn lesson-btn-primary" style="margin-top:16px;display:inline-flex">Back to Lessons</a>
+        <div id="lp-error" style="display:none">
+          <div class="lp-error-card">
+            <h2>Lesson Not Found</h2>
+            <p id="lp-error-msg">The requested lesson could not be found. Please select a lesson from the library.</p>
+            <div class="lp-error-actions">
+              <a href="lessons.html" class="lp-btn lp-btn-primary">Back to Lessons</a>
+              <a href="beginner-course.html" class="lp-btn lp-btn-secondary">Start Beginner Course</a>
+            </div>
+          </div>
         </div>
-        <div id="player-content">
-          <div class="player-header">
-            <p style="color:var(--text-muted);font-family:var(--font-mono);font-size:0.85rem" id="player-meta"></p>
-          </div>
-          <div class="player-stats">
-            <div class="player-stat">
-              <span class="player-stat-value" id="stat-wpm">0</span>
-              <span class="player-stat-label">WPM</span>
-            </div>
-            <div class="player-stat">
-              <span class="player-stat-value" id="stat-accuracy">100%</span>
-              <span class="player-stat-label">Accuracy</span>
-            </div>
-            <div class="player-stat">
-              <span class="player-stat-value" id="stat-timer">0:00</span>
-              <span class="player-stat-label">Time</span>
-            </div>
-            <div class="player-stat">
-              <span class="player-stat-value" id="stat-progress">0%</span>
-              <span class="player-stat-label">Progress</span>
-            </div>
-          </div>
-          <div class="player-text" id="player-text">
-            <p style="color:var(--text-muted);text-align:center;padding:20px 0">Press <strong>Start</strong> and begin typing to practice this lesson</p>
-          </div>
-          <input type="text" class="player-input" id="player-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="Type here..." style="display:block;width:100%;padding:14px 18px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:1rem;background:#fff;color:var(--text);outline:none;transition:border-color var(--transition);box-sizing:border-box">
-          <div class="player-controls">
-            <button class="lesson-btn lesson-btn-primary" id="start-btn">Start Lesson</button>
-            <button class="lesson-btn lesson-btn-secondary" id="reset-btn" style="display:none">Reset</button>
-          </div>
-          <div class="player-keyboard-wrapper">
-            <div class="player-keyboard" id="player-keyboard"></div>
-          </div>
-          <div class="player-tips" id="player-tips">
-            <h3>Finger Tip</h3>
-            <p id="finger-tip-text">Loading...</p>
-          </div>
-          <div class="player-instruction">
-            <h3>How to Type This Lesson</h3>
-            <p id="lesson-instruction-text">Loading...</p>
-          </div>
-          <div class="player-results" id="player-results">
-            <h2>Lesson Complete</h2>
-            <div class="result-stats">
-              <div class="stat-item">
-                <span class="stat-number" id="result-wpm">0</span>
-                <span class="stat-label">WPM</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number" id="result-accuracy">0%</span>
-                <span class="stat-label">Accuracy</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number" id="result-time">0:00</span>
-                <span class="stat-label">Time</span>
-              </div>
-            </div>
-            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-              <a href="lessons.html" class="lesson-btn lesson-btn-primary">Back to Lessons</a>
-              <button class="lesson-btn lesson-btn-secondary" id="retry-btn">Try Again</button>
-              <a href="lessons.html" class="lesson-btn lesson-btn-secondary" id="next-lesson-btn" style="display:none">Next Lesson</a>
-            </div>
+        <div id="lp-content">
+          <div id="lp-ready" class="lp-wait-screen">
+            <h2>Loading Lesson</h2>
+            <p>Preparing your typing session...</p>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="sr-only" aria-live="polite" id="lp-aria-live"></div>
+    <div class="lp-pause-overlay" id="lp-pause-overlay">
+      <div style="text-align:center">
+        <h2>Lesson Paused</h2>
+        <p>Take a break. Come back when you're ready.</p>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+          <button class="lp-btn lp-btn-primary" id="lp-resume-btn">Resume Lesson</button>
+          <button class="lp-btn lp-btn-secondary" id="lp-restart-from-pause-btn">Restart</button>
+        </div>
+      </div>
+    </div>
+    <input type="text" class="lp-hidden-input" id="lp-hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="none" aria-hidden="true" tabindex="-1">
   </main>
   <footer class="site-footer" role="contentinfo">
     <div class="container">
@@ -189,8 +1039,7 @@
       <div class="footer-bottom">
         <span>&copy; 2026 TypeSkill. All rights reserved.</span>
         <div class="footer-social">
-
-<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+          <a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
         </div>
       </div>
     </div>
@@ -199,133 +1048,475 @@
   <script src="assets/js/lesson-data.js"></script>
   <script>
   (function() {
+    'use strict';
+
+    // === State ===
     var lessonId = new URLSearchParams(window.location.search).get('lesson');
-    var errorEl = document.getElementById('lesson-error');
-    var contentEl = document.getElementById('player-content');
-    if (!lessonId || !errorEl || !contentEl) {
-      if (errorEl) errorEl.style.display = 'block';
-      if (contentEl) contentEl.style.display = 'none';
-      return;
-    }
-    var lesson = LESSON_DATA.find(function(l) { return l.id === lessonId; });
-    if (!lesson) {
-      errorEl.style.display = 'block';
-      contentEl.style.display = 'none';
-      return;
-    }
-
-    var breadcrumbEl = document.getElementById('breadcrumb-lesson');
-    var titleEl = document.getElementById('player-title');
-    var subtitleEl = document.getElementById('player-subtitle');
-    var fingerTipEl = document.getElementById('finger-tip-text');
-    var instructionEl = document.getElementById('lesson-instruction-text');
-    var metaEl = document.getElementById('player-meta');
-    var textContainer = document.getElementById('player-text');
-    var statWpm = document.getElementById('stat-wpm');
-    var statAccuracy = document.getElementById('stat-accuracy');
-    var statTimer = document.getElementById('stat-timer');
-    var statProgress = document.getElementById('stat-progress');
-    var resultWpm = document.getElementById('result-wpm');
-    var resultAccuracy = document.getElementById('result-accuracy');
-    var resultTime = document.getElementById('result-time');
-    var playerResults = document.getElementById('player-results');
-    var startBtn = document.getElementById('start-btn');
-    var resetBtn = document.getElementById('reset-btn');
-    var retryBtn = document.getElementById('retry-btn');
-    var nextBtn = document.getElementById('next-lesson-btn');
-    var playerInput = document.getElementById('player-input');
-    var kbEl = document.getElementById('player-keyboard');
-    var scrollContainer = document.getElementById('player-text');
-
-    if (breadcrumbEl) breadcrumbEl.textContent = lesson.title;
-    if (titleEl) titleEl.textContent = lesson.title;
-    if (subtitleEl) subtitleEl.textContent = lesson.description;
-    if (fingerTipEl) fingerTipEl.textContent = lesson.fingerTip || 'Focus on accuracy first. Speed will follow with practice.';
-    if (instructionEl) instructionEl.textContent = lesson.instruction;
-    if (metaEl) metaEl.textContent = lesson.level.charAt(0).toUpperCase() + lesson.level.slice(1) + '  \u00B7  ' + lesson.estimatedMinutes + ' min  \u00B7  Target: ' + lesson.wpmTarget + ' WPM';
-
-    var text = lesson.practiceText;
-    var chars = text.split('');
-    var charSpans = [];
-    if (textContainer) textContainer.innerHTML = '';
-
-    chars.forEach(function(c, i) {
-      var span = document.createElement('span');
-      span.className = 'char';
-      if (c === ' ') {
-        span.innerHTML = '\u00A0';
-        span.classList.add('space');
-      } else {
-        span.textContent = c;
-      }
-      charSpans.push(span);
-      if (textContainer) textContainer.appendChild(span);
-    });
-
-    if (charSpans.length > 0 && charSpans[0]) {
-      charSpans[0].classList.add('current');
-    }
-
+    var lesson = null;
+    var steps = [];
     var pos = 0;
     var correctCount = 0;
     var incorrectCount = 0;
     var isRunning = false;
+    var isPaused = false;
     var isFinished = false;
-    var timerInterval = null;
     var startTime = null;
     var elapsedSeconds = 0;
-
+    var timerInterval = null;
+    var streak = 0;
+    var bestStreak = 0;
+    var totalTyped = 0;
+    var soundEnabled = true;
+    var keyElements = {};
     var nextLesson = null;
-    var lessonIdx = LESSON_DATA.indexOf(lesson);
-    if (lessonIdx >= 0 && lessonIdx < LESSON_DATA.length - 1) {
-      nextLesson = LESSON_DATA[lessonIdx + 1];
+    var lastTyped = '';
+
+    // DOM refs
+    var $ = function(id) { return document.getElementById(id); };
+    var content = $('lp-content');
+    var errorDiv = $('lp-error');
+    var errorMsg = $('lp-error-msg');
+    var readyDiv = $('lp-ready');
+    var ariaLive = $('lp-aria-live');
+    var pauseOverlay = $('lp-pause-overlay');
+    var hiddenInput = $('lp-hidden-input');
+
+    // === Sound Engine ===
+    var audioCtx = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
     }
 
-    var keyElements = {};
+    function playTone(freq, duration, type, volume) {
+      if (!soundEnabled) return;
+      try {
+        var ctx = getAudioCtx();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(volume || 0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + duration);
+      } catch(e) {}
+    }
 
+    function playCorrectSound() {
+      playTone(523.25, 0.08, 'sine', 0.06);
+      setTimeout(function() { playTone(659.25, 0.06, 'sine', 0.04); }, 60);
+    }
+
+    function playWrongSound() {
+      playTone(200, 0.15, 'sawtooth', 0.04);
+    }
+
+    function playCompleteSound() {
+      var notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach(function(n, i) {
+        setTimeout(function() { playTone(n, 0.12, 'sine', 0.06); }, i * 100);
+      });
+    }
+
+    function playClickSound() {
+      playTone(800, 0.04, 'sine', 0.03);
+    }
+
+    // === Sound toggle ===
+    try { soundEnabled = localStorage.getItem('typeskill_sound') !== 'off'; } catch(e) {}
+
+    // === Lesson load ===
+    if (!lessonId) {
+      errorDiv.style.display = 'block';
+      errorMsg.textContent = 'No lesson selected. Please choose a lesson from the lesson library.';
+      readyDiv.style.display = 'none';
+    } else {
+      lesson = (typeof LESSON_DATA !== 'undefined') ? LESSON_DATA.find(function(l) { return l.id === lessonId; }) : null;
+      if (!lesson) {
+        errorDiv.style.display = 'block';
+        errorMsg.textContent = 'Lesson "' + lessonId + '" not found. Please choose a lesson from the lesson library.';
+        readyDiv.style.display = 'none';
+      } else {
+        readyDiv.style.display = 'none';
+        var lessonIdx = LESSON_DATA.indexOf(lesson);
+        if (lessonIdx >= 0 && lessonIdx < LESSON_DATA.length - 1) {
+          nextLesson = LESSON_DATA[lessonIdx + 1];
+        }
+        initLesson();
+      }
+    }
+
+    function initLesson() {
+      // Generate steps from practiceText
+      var text = lesson.practiceText || '';
+      steps = [];
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        var finger = (typeof FINGER_MAP !== 'undefined' && FINGER_MAP[ch]) ? FINGER_MAP[ch] : '';
+        steps.push({
+          char: ch,
+          display: ch === ' ' ? 'Space' : ch,
+          finger: finger,
+          instruction: finger ? ('Use your ' + (FINGER_LABELS[finger] || finger)) : 'Type this key'
+        });
+      }
+
+      renderLesson();
+      buildKeyboard();
+      buildFingerGuide();
+      updateTargetDisplay();
+      updateStats();
+      updateProgress();
+      updateFingerHighlight();
+      bindControls();
+      bindKeydown();
+    }
+
+    // === Render ===
+    function renderLesson() {
+      var levelLabel = lesson.level ? lesson.level.charAt(0).toUpperCase() + lesson.level.slice(1) : 'Beginner';
+      var levelBadge = '';
+      if (lesson.level === 'beginner') levelBadge = '<span class="lp-level-badge">Beginner</span>';
+      else if (lesson.level === 'intermediate') levelBadge = '<span class="lp-level-badge" style="background:#FEF3C7;color:#D97706">Intermediate</span>';
+      else levelBadge = '<span class="lp-level-badge" style="background:#F3E8FF;color:#7C3AED">Advanced</span>';
+
+      content.innerHTML =
+        '<div class="lp-header-card">' +
+          '<div class="lp-breadcrumb">' +
+            '<a href="index.html">Home</a><span class="sep">›</span>' +
+            '<a href="lessons.html">Lessons</a><span class="sep">›</span>' +
+            '<span class="current">' + escHtml(lesson.title) + '</span>' +
+          '</div>' +
+          '<div class="lp-title-row">' +
+            '<h1>' + escHtml(lesson.title) + '</h1>' +
+            levelBadge +
+          '</div>' +
+          '<p class="lp-desc">' + escHtml(lesson.description) + '</p>' +
+          '<div class="lp-meta-row">' +
+            '<span class="lp-meta-item">' +
+              '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>' +
+              'Level: ' + levelLabel +
+            '</span>' +
+            '<span class="lp-meta-item">' +
+              '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>' +
+              'Est: ' + (lesson.estimatedMinutes || 5) + ' min' +
+            '</span>' +
+            '<span class="lp-meta-item">' +
+              '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>' +
+              'Target: ' + (lesson.wpmTarget || 0) + ' WPM' +
+            '</span>' +
+            '<span class="lp-meta-item">' +
+              '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>' +
+              'Accuracy: &ge;' + (lesson.accuracyTarget || 80) + '%' +
+            '</span>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="lp-options-row">' +
+          '<button class="lp-toggle-wrap lp-sound-toggle" id="lp-sound-btn" aria-label="Toggle sound">' +
+            '<span id="lp-sound-icon">' + (soundEnabled ? '🔊' : '🔇') + '</span>' +
+            '<span>Sound</span>' +
+          '</button>' +
+        '</div>' +
+
+        '<div class="lp-progress-section">' +
+          '<div class="lp-progress-header">' +
+            '<span class="lp-progress-step">Step <span id="lp-step-current">0</span> of <span id="lp-step-total">0</span></span>' +
+            '<span>Progress: <span id="lp-progress-pct">0%</span></span>' +
+          '</div>' +
+          '<div class="lp-progress-track"><div class="lp-progress-fill" id="lp-progress-fill"></div></div>' +
+        '</div>' +
+
+        '<div class="lp-instruction-panel" id="lp-instruction-panel">' +
+          '<p class="lp-instruction-text" id="lp-instruction-text">Press <strong>Start Lesson</strong> to begin</p>' +
+          '<div class="lp-big-key lp-pulse" id="lp-big-key">' +
+            (steps.length > 0 ? escHtml(steps[0].display) : '-') +
+          '</div>' +
+          '<p class="lp-key-hint" id="lp-key-hint">Press the highlighted key</p>' +
+          '<p class="lp-feedback" id="lp-feedback"></p>' +
+        '</div>' +
+
+        '<div class="lp-stats-row" id="lp-stats-row">' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-wpm">0</span><span class="lp-stat-label">WPM</span></div>' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-acc">100%</span><span class="lp-stat-label">Accuracy</span></div>' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-mistakes">0</span><span class="lp-stat-label">Mistakes</span></div>' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-streak">0</span><span class="lp-stat-label">Streak</span></div>' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-time">0:00</span><span class="lp-stat-label">Time</span></div>' +
+        '</div>' +
+
+        '<div class="lp-finger-guide" id="lp-finger-guide"></div>' +
+
+        '<div class="lp-kb-wrapper"><div class="lp-kb-container" id="lp-keyboard"></div></div>' +
+
+        '<div class="lp-controls" id="lp-controls">' +
+          '<button class="lp-btn lp-btn-primary" id="lp-start-btn">Start Lesson</button>' +
+          '<button class="lp-btn lp-btn-secondary" id="lp-pause-btn" style="display:none">Pause</button>' +
+          '<button class="lp-btn lp-btn-outline" id="lp-restart-btn" style="display:none">Restart</button>' +
+          '<a href="lessons.html" class="lp-btn lp-btn-outline" id="lp-exit-btn" style="display:none">Exit</a>' +
+        '</div>' +
+
+        '<div class="lp-completion" id="lp-completion">' +
+          '<span class="lp-completion-icon">🏆</span>' +
+          '<div class="lp-completion-badge">Lesson Complete</div>' +
+          '<h2>Great Work!</h2>' +
+          '<p class="lp-desc">Here is how you performed on this lesson.</p>' +
+          '<div class="lp-completion-grid">' +
+            '<div class="lp-completion-stat"><span class="lp-stat-value" id="lp-res-wpm">0</span><span class="lp-stat-label">WPM</span></div>' +
+            '<div class="lp-completion-stat"><span class="lp-stat-value" id="lp-res-acc">0%</span><span class="lp-stat-label">Accuracy</span></div>' +
+            '<div class="lp-completion-stat"><span class="lp-stat-value" id="lp-res-mistakes">0</span><span class="lp-stat-label">Mistakes</span></div>' +
+            '<div class="lp-completion-stat"><span class="lp-stat-value" id="lp-res-streak">0</span><span class="lp-stat-label">Best Streak</span></div>' +
+          '</div>' +
+          '<div class="lp-completion-actions">' +
+            '<button class="lp-btn lp-btn-success" id="lp-next-btn"' + (nextLesson ? '' : ' style="display:none"') + '>Next Lesson</button>' +
+            '<button class="lp-btn lp-btn-primary" id="lp-retry-btn">Try Again</button>' +
+            '<a href="lessons.html" class="lp-btn lp-btn-outline">Back to Lessons</a>' +
+          '</div>' +
+        '</div>';
+
+      // Re-bind sound toggle
+      var soundBtn = $('lp-sound-btn');
+      if (soundBtn) {
+        soundBtn.addEventListener('click', function() {
+          soundEnabled = !soundEnabled;
+          localStorage.setItem('typeskill_sound', soundEnabled ? 'on' : 'off');
+          var icon = $('lp-sound-icon');
+          if (icon) icon.textContent = soundEnabled ? '🔊' : '🔇';
+          playClickSound();
+        });
+      }
+    }
+
+    function escHtml(s) {
+      if (!s) return '';
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // === Keyboard ===
     function buildKeyboard() {
-      if (!kbEl) return;
+      var kb = $('lp-keyboard');
+      if (!kb) return;
+      kb.innerHTML = '';
+      keyElements = {};
       var rows = [
-        ['`','1','2','3','4','5','6','7','8','9','0','-','='],
-        ['q','w','e','r','t','y','u','i','o','p','[',']','\\'],
-        ['a','s','d','f','g','h','j','k','l',';','\''],
-        ['z','x','c','v','b','n','m',',','.','/'],
-        [' ']
+        { keys: ['`','1','2','3','4','5','6','7','8','9','0','-','='], extra: '' },
+        { keys: ['q','w','e','r','t','y','u','i','o','p','[',']','\\'], extra: '' },
+        { keys: ['a','s','d','f','g','h','j','k','l',';',"'"], extra: '' },
+        { keys: ['z','x','c','v','b','n','m',',','.','/'], extra: '' },
+        { keys: [' '], extra: 'space' }
       ];
       rows.forEach(function(row) {
         var rowDiv = document.createElement('div');
-        rowDiv.className = 'pkb-row';
-        row.forEach(function(keyChar) {
+        rowDiv.className = 'lp-kb-row';
+        row.keys.forEach(function(keyChar) {
           var key = document.createElement('div');
-          key.className = 'pkb-key';
+          key.className = 'lp-key';
           if (keyChar === ' ') {
             key.textContent = 'Space';
-            key.classList.add('space-key');
+            key.classList.add('lp-key-space');
           } else {
             key.textContent = keyChar;
           }
           rowDiv.appendChild(key);
           keyElements[keyChar] = key;
         });
-        kbEl.appendChild(rowDiv);
+        kb.appendChild(rowDiv);
       });
+      highlightCurrentKey();
     }
-    buildKeyboard();
 
-    function highlightKey(ch) {
+    function highlightCurrentKey() {
+      var current = getCurrentStep();
       Object.keys(keyElements).forEach(function(k) {
-        if (keyElements[k]) keyElements[k].classList.remove('active');
+        var el = keyElements[k];
+        el.classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
       });
-      var lower = ch.toLowerCase();
-      if (keyElements[lower]) {
-        keyElements[lower].classList.add('active');
+      if (current && current.char !== ' ') {
+        var lower = current.char.toLowerCase();
+        if (keyElements[lower]) {
+          keyElements[lower].classList.add('lp-key-target');
+        }
       }
     }
 
-    function clearKeyHighlight() {
-      Object.keys(keyElements).forEach(function(k) {
-        if (keyElements[k]) keyElements[k].classList.remove('active');
+    function flashKey(ch, type) {
+      var lower = (typeof ch === 'string') ? ch.toLowerCase() : '';
+      if (keyElements[lower]) {
+        keyElements[lower].classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
+        keyElements[lower].classList.add('lp-key-' + type);
+        setTimeout(function() {
+          if (keyElements[lower]) {
+            keyElements[lower].classList.remove('lp-key-' + type);
+            if (lower === (getCurrentStep() ? getCurrentStep().char.toLowerCase() : '')) {
+              keyElements[lower].classList.add('lp-key-target');
+            }
+          }
+        }, 300);
+      }
+      if (ch === ' ') {
+        var spaceKey = document.querySelector('.lp-key-space');
+        if (spaceKey) {
+          spaceKey.classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
+          spaceKey.classList.add('lp-key-' + type);
+          setTimeout(function() {
+            spaceKey.classList.remove('lp-key-' + type);
+            if (getCurrentStep() && getCurrentStep().char === ' ') {
+              spaceKey.classList.add('lp-key-target');
+            }
+          }, 300);
+        }
+      }
+    }
+
+    // === Finger Guide ===
+    function buildFingerGuide() {
+      var guide = $('lp-finger-guide');
+      if (!guide) return;
+      guide.innerHTML = '';
+      var fingers = [
+        { id: 'left-pinky', label: 'Pinky' },
+        { id: 'left-ring', label: 'Ring' },
+        { id: 'left-middle', label: 'Middle' },
+        { id: 'left-index', label: 'Index' }
+      ];
+      // Left hand
+      var leftDiv = document.createElement('div');
+      leftDiv.className = 'lp-hand-side';
+      var leftLabel = document.createElement('span');
+      leftLabel.className = 'lp-hand-label';
+      leftLabel.textContent = 'Left';
+      leftDiv.appendChild(leftLabel);
+      fingers.forEach(function(f) {
+        var dot = document.createElement('div');
+        dot.className = 'lp-finger-dot';
+        dot.id = 'lp-fd-' + f.id;
+        dot.innerHTML = '<div class="lp-finger-icon"></div><div class="lp-finger-name">' + f.label + '</div>';
+        leftDiv.appendChild(dot);
       });
+
+      var divider = document.createElement('div');
+      divider.className = 'lp-finger-divider';
+
+      // Thumbs
+      var thumbDiv = document.createElement('div');
+      thumbDiv.style.display = 'flex';
+      thumbDiv.style.alignItems = 'center';
+      thumbDiv.style.gap = '0';
+
+      var leftThumb = document.createElement('div');
+      leftThumb.className = 'lp-thumb-area';
+      leftThumb.id = 'lp-fd-thumb';
+      leftThumb.innerHTML = '<div class="lp-finger-icon"></div><div class="lp-finger-name">Thumb</div>';
+
+      thumbDiv.appendChild(leftThumb);
+
+      // Right hand
+      var rightFingers = [
+        { id: 'right-index', label: 'Index' },
+        { id: 'right-middle', label: 'Middle' },
+        { id: 'right-ring', label: 'Ring' },
+        { id: 'right-pinky', label: 'Pinky' }
+      ];
+      var rightDiv = document.createElement('div');
+      rightDiv.className = 'lp-hand-side';
+      rightFingers.forEach(function(f) {
+        var dot = document.createElement('div');
+        dot.className = 'lp-finger-dot';
+        dot.id = 'lp-fd-' + f.id;
+        dot.innerHTML = '<div class="lp-finger-icon"></div><div class="lp-finger-name">' + f.label + '</div>';
+        rightDiv.appendChild(dot);
+      });
+      var rightLabel = document.createElement('span');
+      rightLabel.className = 'lp-hand-label';
+      rightLabel.textContent = 'Right';
+      rightDiv.appendChild(rightLabel);
+
+      guide.appendChild(leftDiv);
+      guide.appendChild(divider);
+      guide.appendChild(thumbDiv);
+      guide.appendChild(divider.cloneNode());
+      guide.appendChild(rightDiv);
+    }
+
+    function updateFingerHighlight() {
+      var current = getCurrentStep();
+      var allDots = document.querySelectorAll('.lp-finger-dot, .lp-thumb-area');
+      allDots.forEach(function(el) {
+        el.classList.remove('lp-finger-active');
+      });
+      if (current && current.finger) {
+        var targetEl = $('lp-fd-' + current.finger);
+        if (targetEl) {
+          targetEl.classList.add('lp-finger-active');
+        }
+      }
+    }
+
+    // === Target Display ===
+    function getCurrentStep() {
+      if (pos < steps.length) return steps[pos];
+      return null;
+    }
+
+    function updateTargetDisplay() {
+      var current = getCurrentStep();
+      var bigKey = $('lp-big-key');
+      var instText = $('lp-instruction-text');
+      var keyHint = $('lp-key-hint');
+
+      if (!current) {
+        if (bigKey) bigKey.textContent = '✓';
+        if (instText) instText.textContent = 'Lesson complete!';
+        if (keyHint) keyHint.textContent = '';
+        return;
+      }
+
+      if (bigKey) {
+        bigKey.textContent = escHtml(current.display);
+        bigKey.className = 'lp-big-key';
+        if (!isRunning && !isFinished) {
+          bigKey.classList.add('lp-pulse');
+        }
+      }
+
+      if (instText) {
+        if (!isRunning) {
+          instText.textContent = 'Press Start Lesson to begin';
+        } else if (isPaused) {
+          instText.textContent = 'Lesson paused. Press Resume to continue.';
+        } else {
+          var fingerInfo = current.finger ? 'Use your ' + (FINGER_LABELS[current.finger] || current.finger) + ' to type:' : 'Type this key:';
+          instText.textContent = fingerInfo;
+        }
+      }
+
+      if (keyHint) {
+        if (!isRunning) {
+          keyHint.textContent = 'Press the highlighted key';
+        } else if (isPaused) {
+          keyHint.textContent = '';
+        } else {
+          keyHint.textContent = 'Press the ' + current.display + ' key';
+        }
+      }
+    }
+
+    function updateProgress() {
+      var stepCurrent = $('lp-step-current');
+      var stepTotal = $('lp-step-total');
+      var progressPct = $('lp-progress-pct');
+      var progressFill = $('lp-progress-fill');
+
+      if (stepCurrent) stepCurrent.textContent = Math.min(pos + 1, steps.length);
+      if (stepTotal) stepTotal.textContent = steps.length;
+      var pct = steps.length > 0 ? Math.round(pos / steps.length * 100) : 0;
+      if (progressPct) progressPct.textContent = pct + '%';
+      if (progressFill) progressFill.style.width = pct + '%';
     }
 
     function updateStats() {
@@ -335,200 +1526,323 @@
       var minutes = elapsed / 60000;
       var wpm = minutes > 0 && correctCount > 0 ? Math.round((correctCount / 5) / minutes) : 0;
 
+      var statWpm = $('lp-stat-wpm');
+      var statAcc = $('lp-stat-acc');
+      var statMistakes = $('lp-stat-mistakes');
+      var statStreak = $('lp-stat-streak');
+      var statTime = $('lp-stat-time');
+
       if (statWpm) statWpm.textContent = wpm;
-      if (statAccuracy) statAccuracy.textContent = accuracy + '%';
-      if (statProgress) statProgress.textContent = Math.round(pos / chars.length * 100) + '%';
+      if (statAcc) statAcc.textContent = accuracy + '%';
+      if (statMistakes) statMistakes.textContent = incorrectCount;
+      if (statStreak) statStreak.textContent = streak;
+      if (statTime) statTime.textContent = formatTime(elapsedSeconds);
+    }
+
+    function formatTime(secs) {
+      var m = Math.floor(secs / 60);
+      var s = secs % 60;
+      return m + ':' + (s < 10 ? '0' : '') + s;
     }
 
     function updateTimer() {
-      if (!startTime) return;
+      if (!startTime || isPaused) return;
       elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
-      var mins = Math.floor(elapsedSeconds / 60);
-      var secs = elapsedSeconds % 60;
-      if (statTimer) statTimer.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+      updateStats();
     }
 
+    // === Core Lesson Logic ===
     function processChar(typed) {
-      if (isFinished || pos >= chars.length) return;
+      if (isFinished || isPaused || !isRunning || pos >= steps.length) return;
 
-      var expected = chars[pos];
+      var current = getCurrentStep();
+      if (!current) return;
+
+      var expected = current.char;
+
       if (typed === expected) {
         correctCount++;
-        if (charSpans[pos]) {
-          charSpans[pos].classList.remove('current');
-          charSpans[pos].classList.add('correct');
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        // Visual feedback
+        var bigKey = $('lp-big-key');
+        if (bigKey) {
+          bigKey.className = 'lp-big-key lp-correct';
+          setTimeout(function() {
+            if (bigKey && !isFinished) {
+              bigKey.className = 'lp-big-key';
+              if (!isRunning) bigKey.classList.add('lp-pulse');
+            }
+          }, 300);
+        }
+        flashKey(typed, 'correct');
+        playCorrectSound();
+        setFeedback('Correct!', 'correct');
+        ariaLive.textContent = 'Correct';
+        totalTyped++;
+        pos++;
+        updateProgress();
+        highlightCurrentKey();
+        updateFingerHighlight();
+        updateTargetDisplay();
+        updateStats();
+
+        if (pos >= steps.length) {
+          finishLesson();
         }
       } else {
         incorrectCount++;
-        if (charSpans[pos]) {
-          charSpans[pos].classList.remove('current');
-          charSpans[pos].classList.add('incorrect');
+        streak = 0;
+        // Visual feedback
+        var bigKey = $('lp-big-key');
+        if (bigKey) {
+          bigKey.className = 'lp-big-key lp-wrong';
+          setTimeout(function() {
+            if (bigKey && !isFinished) {
+              bigKey.className = 'lp-big-key';
+            }
+          }, 400);
         }
-      }
-
-      highlightKey(typed);
-      pos++;
-
-      if (pos < chars.length && charSpans[pos]) {
-        charSpans[pos].classList.add('current');
-        if (scrollContainer && charSpans[pos].offsetTop > scrollContainer.clientHeight + scrollContainer.scrollTop - 40) {
-          charSpans[pos].scrollIntoView({ block: 'nearest' });
-        }
-      }
-
-      updateStats();
-
-      if (pos >= chars.length) {
-        finishLesson();
+        flashKey(typed, 'wrong');
+        playWrongSound();
+        var fingerTip = current.finger ? 'Use your ' + (FINGER_LABELS[current.finger] || current.finger) : 'Try again';
+        setFeedback('Try again — ' + fingerTip, 'wrong');
+        ariaLive.textContent = 'Incorrect. ' + fingerTip;
+        totalTyped++;
+        updateStats();
       }
     }
 
+    function setFeedback(msg, type) {
+      var el = $('lp-feedback');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'lp-feedback';
+      if (type) el.classList.add(type);
+    }
+
+    // === Lesson Flow ===
     function startLesson() {
       if (isRunning) return;
       isRunning = true;
+      isPaused = false;
+      isFinished = false;
       startTime = Date.now();
       timerInterval = setInterval(function() {
         updateTimer();
-        updateStats();
       }, 200);
-      if (startBtn) startBtn.style.display = 'none';
-      if (resetBtn) resetBtn.style.display = '';
-      if (playerInput) { playerInput.value = ''; playerInput.focus(); }
+      $('lp-start-btn').style.display = 'none';
+      $('lp-pause-btn').style.display = '';
+      $('lp-restart-btn').style.display = '';
+      $('lp-exit-btn').style.display = '';
+      var bigKey = $('lp-big-key');
+      if (bigKey) bigKey.className = 'lp-big-key';
+      updateTargetDisplay();
+      setFeedback('', '');
+      ariaLive.textContent = 'Lesson started';
+      // Focus hidden input
+      hiddenInput.focus();
+    }
+
+    function pauseLesson() {
+      if (!isRunning || isPaused || isFinished) return;
+      isPaused = true;
+      if (timerInterval) clearInterval(timerInterval);
+      pauseOverlay.classList.add('show');
+      ariaLive.textContent = 'Lesson paused';
+      updateTargetDisplay();
+    }
+
+    function resumeLesson() {
+      if (!isPaused) return;
+      isPaused = false;
+      if (timerInterval) clearInterval(timerInterval);
+      // Adjust start time to account for pause duration
+      startTime = Date.now() - elapsedSeconds * 1000;
+      timerInterval = setInterval(function() {
+        updateTimer();
+      }, 200);
+      pauseOverlay.classList.remove('show');
+      ariaLive.textContent = 'Lesson resumed';
+      updateTargetDisplay();
+      hiddenInput.focus();
+    }
+
+    function restartLesson() {
+      isRunning = false;
+      isPaused = false;
+      isFinished = false;
+      pos = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+      streak = 0;
+      bestStreak = 0;
+      totalTyped = 0;
+      startTime = null;
+      elapsedSeconds = 0;
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+      pauseOverlay.classList.remove('show');
+      $('lp-completion').classList.remove('show');
+      $('lp-start-btn').style.display = '';
+      $('lp-pause-btn').style.display = 'none';
+      $('lp-restart-btn').style.display = 'none';
+      $('lp-exit-btn').style.display = 'none';
+      var bigKey = $('lp-big-key');
+      if (bigKey) bigKey.className = 'lp-big-key lp-pulse';
+      highlightCurrentKey();
+      updateFingerHighlight();
+      updateTargetDisplay();
+      updateProgress();
+      updateStats();
+      setFeedback('', '');
+      ariaLive.textContent = 'Lesson restarted';
+      hiddenInput.focus();
     }
 
     function finishLesson() {
       isFinished = true;
       isRunning = false;
-      clearInterval(timerInterval);
-      clearKeyHighlight();
-      updateTimer();
-      updateStats();
+      if (timerInterval) clearInterval(timerInterval);
 
+      // Final stats
       var total = correctCount + incorrectCount;
       var accuracy = total > 0 ? Math.round(correctCount / total * 100) : 0;
       var elapsed = startTime ? (Date.now() - startTime) : 0;
       var minutes = elapsed / 60000;
       var wpm = minutes > 0 ? Math.round((correctCount / 5) / minutes) : 0;
+      var finalTime = formatTime(elapsedSeconds);
 
-      if (resultWpm) resultWpm.textContent = wpm;
-      if (resultAccuracy) resultAccuracy.textContent = accuracy + '%';
-      if (resultTime) resultTime.textContent = statTimer ? statTimer.textContent : '0:00';
+      // Update completion screen
+      $('lp-res-wpm').textContent = wpm;
+      $('lp-res-acc').textContent = accuracy + '%';
+      $('lp-res-mistakes').textContent = incorrectCount;
+      $('lp-res-streak').textContent = bestStreak;
 
-      if (playerResults) {
-        playerResults.classList.add('show');
-        playerResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+      // Show completion
+      $('lp-completion').classList.add('show');
+      $('lp-start-btn').style.display = 'none';
+      $('lp-pause-btn').style.display = 'none';
+      $('lp-restart-btn').style.display = 'none';
+      $('lp-exit-btn').style.display = 'none';
+      $('lp-completion').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      playCompleteSound();
+      ariaLive.textContent = 'Lesson completed. Accuracy: ' + accuracy + '%. WPM: ' + wpm;
 
-      if (nextLesson && nextBtn) {
-        nextBtn.href = 'lesson-player.html?lesson=' + nextLesson.id;
-        nextBtn.style.display = '';
-      }
+      // Save to localStorage
+      saveProgress(lessonId, wpm, accuracy);
+    }
 
+    function saveProgress(id, wpm, accuracy) {
       try {
         var prog = JSON.parse(localStorage.getItem('typeskill_lessons') || '{}');
-        var lp = prog[lessonId] || {};
+        var lp = prog[id] || {};
         lp.completed = true;
         lp.lastCompleted = new Date().toISOString();
         if (!lp.bestWpm || wpm > lp.bestWpm) lp.bestWpm = wpm;
         if (!lp.bestAccuracy || accuracy > lp.bestAccuracy) lp.bestAccuracy = accuracy;
+        lp.lastAccuracy = accuracy;
+        lp.lastWpm = wpm;
         lp.attempts = (lp.attempts || 0) + 1;
-        prog[lessonId] = lp;
+        prog[id] = lp;
         localStorage.setItem('typeskill_lessons', JSON.stringify(prog));
-        if (typeof saveProgress === 'function') {
-          saveProgress({ lastPractice: new Date().toISOString().split('T')[0] });
+        var completed = 0;
+        for (var key in prog) {
+          if (prog[key] && prog[key].completed) completed++;
         }
+        try {
+          var dashData = JSON.parse(localStorage.getItem('typeskill_dashboard') || '{}');
+          dashData.lastPractice = new Date().toISOString().split('T')[0];
+          dashData.lessonsCompleted = completed;
+          localStorage.setItem('typeskill_dashboard', JSON.stringify(dashData));
+        } catch(e) {}
       } catch(e) {}
     }
 
-    function resetLesson() {
-      isRunning = false;
-      isFinished = false;
-      pos = 0;
-      correctCount = 0;
-      incorrectCount = 0;
-      startTime = null;
-      elapsedSeconds = 0;
-      if (timerInterval) clearInterval(timerInterval);
-
-      if (playerResults) playerResults.classList.remove('show');
-      if (startBtn) startBtn.style.display = '';
-      if (resetBtn) resetBtn.style.display = 'none';
-      if (playerInput) playerInput.value = '';
-      if (statWpm) statWpm.textContent = '0';
-      if (statAccuracy) statAccuracy.textContent = '100%';
-      if (statTimer) statTimer.textContent = '0:00';
-      if (statProgress) statProgress.textContent = '0%';
-
-      charSpans.forEach(function(span, i) {
-        span.className = 'char';
-        if (i === 0) span.classList.add('current');
-        if (chars[i] === ' ') span.classList.add('space');
+    // === Controls ===
+    function bindControls() {
+      $('lp-start-btn').addEventListener('click', function() {
+        playClickSound();
+        startLesson();
       });
-
-      clearKeyHighlight();
-      if (scrollContainer) scrollContainer.scrollTop = 0;
+      $('lp-pause-btn').addEventListener('click', function() {
+        playClickSound();
+        pauseLesson();
+      });
+      $('lp-resume-btn').addEventListener('click', function() {
+        playClickSound();
+        resumeLesson();
+      });
+      $('lp-restart-btn').addEventListener('click', function() {
+        playClickSound();
+        restartLesson();
+      });
+      $('lp-restart-from-pause-btn').addEventListener('click', function() {
+        playClickSound();
+        restartLesson();
+      });
+      $('lp-retry-btn').addEventListener('click', function() {
+        playClickSound();
+        restartLesson();
+      });
+      if ($('lp-next-btn')) {
+        $('lp-next-btn').addEventListener('click', function() {
+          playClickSound();
+          if (nextLesson) {
+            window.location.href = 'lesson-player.html?lesson=' + nextLesson.id;
+          }
+        });
+      }
     }
 
-    if (playerInput) {
-      playerInput.addEventListener('keydown', function(e) {
-        if (isFinished) return;
+    // === Keydown ===
+    function bindKeydown() {
+      document.addEventListener('keydown', function(e) {
         if (e.ctrlKey || e.altKey || e.metaKey) return;
-        if (e.key === 'Tab') { e.preventDefault(); return; }
-        if (e.key === 'Backspace') { e.preventDefault(); return; }
-        if (e.key === 'Enter') { e.preventDefault(); return; }
-
-        if (!isRunning) {
-          if (e.key === ' ') { e.preventDefault(); return; }
-          startLesson();
+        if (e.key === 'Tab') { return; }
+        if (e.key === 'Escape') {
+          if (isPaused) {
+            resumeLesson();
+            e.preventDefault();
+          }
+          return;
         }
 
+        if (!isRunning || isPaused || isFinished) return;
+
+        // Only process single character keys
         if (e.key.length === 1) {
           e.preventDefault();
           processChar(e.key);
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          processChar(' ');
         }
       });
 
-      playerInput.addEventListener('input', function() {
-        var val = playerInput.value;
-        if (val.length > 0 && !isFinished) {
-          if (!isRunning) startLesson();
+      // Hidden input fallback for mobile
+      hiddenInput.addEventListener('input', function() {
+        if (!isRunning || isPaused || isFinished) return;
+        var val = hiddenInput.value;
+        if (val.length > 0) {
+          if (!isRunning) { hiddenInput.value = ''; return; }
           var ch = val.slice(-1);
-          playerInput.value = '';
-          if (ch && ch.length === 1) {
-            processChar(ch);
-          }
+          hiddenInput.value = '';
+          if (ch) processChar(ch);
         }
       });
+
+      // Focus hidden input when clicking instruction area
+      var instructionPanel = $('lp-instruction-panel');
+      if (instructionPanel) {
+        instructionPanel.addEventListener('click', function() {
+          if (isRunning && !isPaused && !isFinished) {
+            hiddenInput.focus();
+          }
+        });
+      }
     }
 
-    if (startBtn) {
-      startBtn.addEventListener('click', function() {
-        if (startBtn) startBtn.textContent = 'Type to begin...';
-        if (startBtn) startBtn.disabled = true;
-        var starter = function(e) {
-          if (e.ctrlKey || e.altKey || e.metaKey) return;
-          if (e.key.length > 1 && e.key !== 'Backspace' && e.key !== 'Tab') return;
-          document.removeEventListener('keydown', starter);
-          startLesson();
-        };
-        document.addEventListener('keydown', starter);
-      });
-    }
-
-    if (resetBtn) resetBtn.addEventListener('click', resetLesson);
-    if (retryBtn) retryBtn.addEventListener('click', function() {
-      resetLesson();
-      if (scrollContainer) scrollContainer.scrollIntoView({ behavior: 'smooth' });
-    });
-
-    if (playerInput) {
-      playerInput.addEventListener('focus', function() {
-        playerInput.style.borderColor = '#2563EB';
-      });
-      playerInput.addEventListener('blur', function() {
-        playerInput.style.borderColor = '';
-      });
-    }
   })();
   </script>
 </body>

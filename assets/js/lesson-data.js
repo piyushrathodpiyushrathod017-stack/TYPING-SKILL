@@ -1,6 +1,47 @@
 // TypeSkill — Original Lesson Data
 // 30 original lessons: 10 Beginner, 10 Intermediate, 10 Advanced
 
+// Finger mapping for all standard keys
+var FINGER_MAP = {
+  '`':'left-pinky','1':'left-pinky','q':'left-pinky','a':'left-pinky','z':'left-pinky',
+  '2':'left-ring','w':'left-ring','s':'left-ring','x':'left-ring',
+  '3':'left-middle','e':'left-middle','d':'left-middle','c':'left-middle',
+  '4':'left-index','5':'left-index','r':'left-index','t':'left-index',
+  'f':'left-index','g':'left-index','v':'left-index','b':'left-index',
+  '6':'right-index','7':'right-index','y':'right-index','u':'right-index',
+  'h':'right-index','j':'right-index','n':'right-index','m':'right-index',
+  '8':'right-middle','i':'right-middle','k':'right-middle',',':'right-middle',
+  '9':'right-ring','o':'right-ring','l':'right-ring','.' :'right-ring',
+  '0':'right-pinky','-':'right-pinky','=':'right-pinky','p':'right-pinky',
+  '[':'right-pinky',']':'right-pinky','\\':'right-pinky',';':'right-pinky',
+  "'":'right-pinky','/':'right-pinky',' ':'thumb'
+};
+
+var FINGER_LABELS = {
+  'left-pinky':'Left Pinky',
+  'left-ring':'Left Ring',
+  'left-middle':'Left Middle',
+  'left-index':'Left Index',
+  'right-index':'Right Index',
+  'right-middle':'Right Middle',
+  'right-ring':'Right Ring',
+  'right-pinky':'Right Pinky',
+  'thumb':'Thumb'
+};
+
+var FINGER_HAND = {
+  'left-pinky':'left','left-ring':'left','left-middle':'left','left-index':'left',
+  'right-index':'right','right-middle':'right','right-ring':'right','right-pinky':'right',
+  'thumb':'left'
+};
+
+// Finger position mapping for hand diagram (0-4 left hand, 5-9 right hand)
+var FINGER_POS = {
+  'left-pinky':0,'left-ring':1,'left-middle':2,'left-index':3,
+  'right-index':6,'right-middle':7,'right-ring':8,'right-pinky':9,
+  'thumb':4
+};
+
 var LESSON_DATA = [
   // ===== BEGINNER LESSONS =====
   {
