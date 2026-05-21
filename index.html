@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeSkill — Learn Typing Faster with Guided Practice</title>
+  <meta name="description" content="TypeSkill offers free typing lessons, speed tests, accuracy tests, and educational resources for students. Improve your typing skills today.">
+  <meta property="og:title" content="TypeSkill — Learn Typing with Guided Practice">
+  <meta property="og:description" content="Free typing lessons, speed tests, and educational resources for students and learners.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://typeskill.academy/">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TypeSkill — Learn Typing with Guided Practice">
+  <meta name="twitter:description" content="Free typing lessons, speed tests, and educational resources for students and learners.">
+  <link rel="canonical" href="https://typeskill.academy/index.html">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "TypeSkill",
+    "description": "Free online typing education platform offering typing tests, practice exercises, and digital literacy resources for students.",
+    "url": "https://typeskill.academy",
+    "foundingDate": "2026",
+    "founder": { "@type": "Person", "name": "TypeSkill Team" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is TypeSkill?",
+        "acceptedAnswer": { "@type": "Answer", "text": "TypeSkill is a free educational platform that helps students and learners improve their typing skills through guided practice, speed tests, accuracy exercises, and educational resources." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is TypeSkill really free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, TypeSkill is completely free to use. All lessons, tests, and practice tools are available at no cost." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I start learning typing?",
+        "acceptedAnswer": { "@type": "Answer", "text": "You can start by visiting our Lessons page or taking a Typing Speed Test. We recommend beginners start with keyboard basics and gradually progress through lessons." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <section class="hero-premium">
+      <div class="hero-bg-shapes">
+        <div class="hero-waves" aria-hidden="true">
+          <div class="hero-wave hero-wave-left"></div>
+          <div class="hero-wave hero-wave-right"></div>
+        </div>
+        <div class="hero-keys-bg" aria-hidden="true">
+          <span>A</span><span>S</span><span>D</span><span>F</span>
+          <span>J</span><span>K</span><span>L</span>
+          <span>Q</span><span>W</span><span>E</span><span>R</span>
+          <span>T</span><span>Y</span><span>U</span><span>I</span>
+        </div>
+        <div class="shape shape-orb shape-orb-1"></div>
+        <div class="shape shape-orb shape-orb-2"></div>
+        <div class="shape shape-orb shape-orb-3"></div>
+        <div class="shape shape-orb shape-orb-4"></div>
+      </div>
+      <div class="container">
+        <div class="hero-badge">Free Educational Platform</div>
+        <div class="floating-keys">
+          <span class="floating-key">A</span>
+          <span class="floating-key">S</span>
+          <span class="floating-key">D</span>
+          <span class="floating-key">F</span>
+          <span class="floating-key">J</span>
+          <span class="floating-key">K</span>
+          <span class="floating-key">L</span>
+          <span class="floating-key">;</span>
+          <span class="floating-key">G</span>
+          <span class="floating-key">H</span>
+          <span class="floating-key">T</span>
+          <span class="floating-key">Y</span>
+        </div>
+        <h1><span class="hero-gradient-text">Build Typing Speed</span> with Daily Guided Practice</h1>
+        <p class="hero-subtitle">Practice lessons, speed tests, accuracy drills, and student-friendly typing games in one clean learning platform.</p>
+        <div class="hero-cta">
+          <a href="typing-practice.html" class="btn btn-primary btn-lg btn-arrow">Start Free Typing Practice</a>
+          <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+        </div>
+        <div class="hero-cards">
+          <div class="hero-mini-card">
+            <div class="mini-card-icon blue">&#x26A1;</div>
+            <div class="mini-card-text">
+              <div class="mini-card-label">Your Speed</div>
+              <div class="mini-card-value" id="hero-wpm">-- WPM</div>
+            </div>
+          </div>
+          <div class="hero-mini-card">
+            <div class="mini-card-icon green">&#x2713;</div>
+            <div class="mini-card-text">
+              <div class="mini-card-label">Lessons</div>
+              <div class="mini-card-value" id="hero-lessons">0 / 30</div>
+            </div>
+          </div>
+        </div>
+        <div class="trust-micro">
+          <span>&#10003; No account needed</span>
+          <span>&#10003; Free forever</span>
+          <span>&#10003; Privacy safe</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="features-heading">Everything you need to improve your typing</h2>
+          <p>Free tools and resources designed for students and learners of all levels.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card card-hover">
+            <div class="feature-icon blue">&#x2328;</div>
+            <h3>Typing Speed Test</h3>
+            <p>Test your typing speed with our 1, 3, and 5 minute timed tests. Get instant WPM, accuracy, and mistake results.</p>
+            <a href="speed-test.html" class="btn btn-sm btn-primary mt-2">Try Speed Test</a>
+          </div>
+          <div class="card card-hover">
+            <div class="feature-icon green">&#x2713;</div>
+            <h3>Accuracy Check</h3>
+            <p>Practice typing with real-time feedback. See exactly which characters you type correctly and where to improve.</p>
+            <a href="accuracy-test.html" class="btn btn-sm btn-primary mt-2">Check Accuracy</a>
+          </div>
+          <div class="card card-hover">
+            <div class="feature-icon orange">&#x2605;</div>
+            <h3>Structured Lessons</h3>
+            <p>Follow our beginner-friendly typing curriculum. Learn finger placement, home row keys, and build speed step by step.</p>
+            <a href="lessons.html" class="btn btn-sm btn-primary mt-2">View Lessons</a>
+          </div>
+          <div class="card card-hover">
+            <div class="feature-icon blue">&#x1F4CA;</div>
+            <h3>Progress Tracker</h3>
+            <p>Track your best WPM, accuracy, and practice streaks. Your progress is saved locally and stays private.</p>
+            <a href="progress-tracker.html" class="btn btn-sm btn-primary mt-2">View Progress</a>
+          </div>
+          <div class="card card-hover">
+            <div class="feature-icon green">&#x1F3AE;</div>
+            <h3>Typing Games</h3>
+            <p>Make practice fun with falling words and timed challenge games. A enjoyable way to build keyboard skills.</p>
+            <a href="typing-games.html" class="btn btn-sm btn-primary mt-2">Play Games</a>
+          </div>
+          <div class="card card-hover">
+            <div class="feature-icon orange">&#x1F4D6;</div>
+            <h3>Educational Resources</h3>
+            <p>Learn keyboard basics, computer fundamentals, and digital literacy through our original educational content.</p>
+            <a href="beginner-course.html" class="btn btn-sm btn-primary mt-2">Start Learning</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="roadmap-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="roadmap-heading">Your typing learning roadmap</h2>
+          <p>Follow these steps to go from beginner to confident typist.</p>
+        </div>
+        <div class="roadmap">
+          <div class="roadmap-item">
+            <div class="roadmap-step">1</div>
+            <div class="roadmap-content">
+              <h4>Learn Keyboard Basics</h4>
+              <p>Understand key layout, finger placement, and proper posture</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step">2</div>
+            <div class="roadmap-content">
+              <h4>Practice Home Row Keys</h4>
+              <p>Master the foundation of touch typing with home row exercises</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step">3</div>
+            <div class="roadmap-content">
+              <h4>Build Speed Gradually</h4>
+              <p>Use timed tests and word practice to increase your WPM</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step">4</div>
+            <div class="roadmap-content">
+              <h4>Focus on Accuracy</h4>
+              <p>Practice precision with real-time character feedback</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step">5</div>
+            <div class="roadmap-content">
+              <h4>Track and Improve</h4>
+              <p>Monitor your progress and challenge yourself with games</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="test-preview-heading">
+      <div class="container">
+        <div class="grid-2">
+          <div>
+            <span class="hero-badge">Speed Test</span>
+            <h2 id="test-preview-heading">Check your typing speed in minutes</h2>
+            <p>Our typing speed test measures your words per minute (WPM), accuracy percentage, and mistakes. Choose from 1, 3, or 5 minute tests and get instant results. Track your improvement over time and see how your skills grow with regular practice.</p>
+            <a href="speed-test.html" class="btn btn-primary">Take the Speed Test</a>
+          </div>
+          <div class="card">
+            <div class="flex-between mb-4">
+              <span class="text-muted" style="font-size:0.85rem">Timer: 1:00</span>
+              <span class="text-muted" style="font-size:0.85rem">WPM: 0</span>
+            </div>
+            <div style="font-size:1rem;line-height:1.8;color:var(--text-secondary);background:var(--bg);padding:16px;border-radius:8px;font-family:var(--font)">
+              The quick brown fox jumps over the lazy dog near the riverbank. She sells seashells by the seashore and practice makes perfect.
+            </div>
+            <div class="mt-4 flex-center">
+              <span class="text-muted text-small">Complete the full test on the speed test page</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="challenge-heading">
+      <div class="container">
+        <div class="challenge-card">
+          <h3 id="challenge-heading">Daily Typing Challenge</h3>
+          <p>Practice a new typing exercise every day and build your skills with consistent effort.</p>
+          <a href="typing-practice.html" class="btn">Start Today's Challenge</a>
+          <div class="mt-4 text-small" style="opacity:0.8">New content added regularly to keep practice fresh</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="why-matters-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="why-matters-heading">Why typing matters for students</h2>
+          <p>Typing is a foundational skill that impacts every aspect of modern education.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card card-hover">
+            <h3>Faster assignments</h3>
+            <p>Students who type well complete homework and essays more efficiently, leaving extra time for revision and learning.</p>
+          </div>
+          <div class="card card-hover">
+            <h3>Better exam performance</h3>
+            <p>In digital exams, strong typing skills let students focus on answering questions instead of hunting for keys.</p>
+          </div>
+          <div class="card card-hover">
+            <h3>Career readiness</h3>
+            <p>Typing proficiency is expected in most modern workplaces. Early practice gives students a head start.</p>
+          </div>
+          <div class="card card-hover">
+            <h3>Reduced frustration</h3>
+            <p>When typing feels natural, students can express their ideas without the friction of slow or inaccurate typing.</p>
+          </div>
+          <div class="card card-hover">
+            <h3>Improved focus</h3>
+            <p>Touch typing reduces the mental load of finding keys, allowing students to concentrate on content and quality.</p>
+          </div>
+          <div class="card card-hover">
+            <h3>Digital confidence</h3>
+            <p>Mastering the keyboard builds overall confidence with technology and digital learning tools.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="digital-heading">
+      <div class="container">
+        <div class="grid-2">
+          <div class="card card-hover flex-center" style="min-height:280px;text-align:center">
+            <div>
+              <div style="font-size:3rem;margin-bottom:16px">&#x1F4BB;</div>
+              <h3 id="digital-heading">Digital Literacy for Students</h3>
+              <p class="text-secondary">Understanding computers, keyboards, and digital tools is essential for success in today's classroom. Explore our original guides on computer basics and digital literacy.</p>
+              <a href="digital-literacy.html" class="btn btn-primary mt-4">Explore Digital Literacy</a>
+            </div>
+          </div>
+          <div class="card card-hover flex-center" style="min-height:280px;text-align:center">
+            <div>
+              <div style="font-size:3rem;margin-bottom:16px">&#x1F4D6;</div>
+              <h3>Educational Blog</h3>
+              <p class="text-secondary">Read articles on typing techniques, study tips, digital skills, and more. All content is original and written for students and educators.</p>
+              <a href="blog.html" class="btn btn-primary mt-4">Read the Blog</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="faq-heading">Frequently asked questions</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">What is TypeSkill?</button>
+            <div class="faq-answer"><p>TypeSkill is a free educational platform that helps students and learners improve their typing skills through guided practice, speed tests, accuracy exercises, and educational resources. All content is original and designed for learners of all ages.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">Is TypeSkill really free?</button>
+            <div class="faq-answer"><p>Yes, TypeSkill is completely free to use. All typing tests, practice exercises, lessons, games, and educational resources are available at no cost. There are no hidden fees or subscription plans.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">How do I start learning typing?</button>
+            <div class="faq-answer"><p>You can start by visiting our Lessons page for structured guidance or take a Typing Speed Test to measure your current level. We recommend beginners begin with keyboard basics, practice home row keys, and gradually progress through the lessons.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">Do I need to create an account?</button>
+            <div class="faq-answer"><p>No account or registration is needed. All typing tools work directly in your browser. Your progress is saved locally on your device using browser storage, so your data stays private.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">What is a good typing speed for students?</button>
+            <div class="faq-answer"><p>A good typing speed for students is around 30-40 WPM for beginners, 40-60 WPM for intermediate, and 60+ WPM for advanced. Accuracy above 90 percent is recommended at all levels. Regular practice helps improve both speed and accuracy over time.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">Can I get a certificate for completing typing practice?</button>
+            <div class="faq-answer"><p>Yes, you can generate a personalized completion certificate on our Certificate page. Enter your name and download or print your certificate directly from your browser.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" aria-labelledby="cta-final">
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2606;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2713;</div>
+      <div class="cta-floating" aria-hidden="true">&#x26A1;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2 id="cta-final">Ready to improve your typing today?</h2>
+          <p>Start practicing now and see your speed and accuracy grow. TypeSkill is here to support your learning journey.</p>
+          <div class="cta-actions">
+            <a href="typing-practice.html" class="btn btn-primary btn-lg btn-arrow">Start Free Practice</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script>
+  (function() {
+    function updateHeroStats() {
+      try {
+        var progress = JSON.parse(localStorage.getItem('typeskill_lessons') || '{}');
+        var completed = 0;
+        for (var k in progress) {
+          if (progress[k] && progress[k].completed) completed++;
+        }
+        var heroLessons = document.getElementById('hero-lessons');
+        if (heroLessons) heroLessons.textContent = completed + ' / 30';
+
+        var wpm = 0;
+        for (var k in progress) {
+          if (progress[k] && progress[k].bestWpm && progress[k].bestWpm > wpm) wpm = progress[k].bestWpm;
+        }
+        var heroWpm = document.getElementById('hero-wpm');
+        if (heroWpm) heroWpm.textContent = wpm > 0 ? wpm + ' WPM' : '-- WPM';
+      } catch(e) {}
+    }
+    updateHeroStats();
+  })();
+  </script>
+</body>
+</html>
+

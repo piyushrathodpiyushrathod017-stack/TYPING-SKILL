@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Lessons — TypeSkill</title>
+  <meta name="description" content="Free typing lessons for all skill levels. 30 structured exercises to build keyboard skills from home row to mastery.">
+  <meta property="og:title" content="Typing Lessons — TypeSkill">
+  <meta property="og:description" content="30 structured typing lessons for beginners, intermediate, and advanced learners.">
+  <meta property="og:url" content="https://typeskill.academy/lessons.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://typeskill.academy/lessons.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Lessons","item":"https://typeskill.academy/lessons.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <section class="hero-premium" style="padding-bottom:40px">
+      <div class="hero-bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Lessons</li></ol></nav>
+        <h1><span class="hero-gradient-text">Typing Lessons</span></h1>
+        <p class="hero-subtitle">30 structured lessons — from home row basics to advanced mastery. Track your progress and build skills step by step.</p>
+        <div class="hero-cta">
+          <a href="lesson-player.html?lesson=B1" class="btn btn-primary btn-lg btn-arrow" id="continue-lesson-btn">Continue Learning</a>
+          <a href="lesson-player.html?lesson=B1" class="btn btn-secondary btn-lg">Start from Beginning</a>
+        </div>
+        <div class="hero-cards" style="max-width:600px">
+          <div class="hero-mini-card">
+            <div class="mini-card-icon blue">&#x1F4DA;</div>
+            <div class="mini-card-text">
+              <div class="mini-card-label">Total Lessons</div>
+              <div class="mini-card-value">30</div>
+            </div>
+          </div>
+          <div class="hero-mini-card">
+            <div class="mini-card-icon green">&#x2713;</div>
+            <div class="mini-card-text">
+              <div class="mini-card-label">Completed</div>
+              <div class="mini-card-value" id="hero-completed-lessons">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section lesson-page">
+      <div class="container">
+        <div class="lesson-stats" id="lesson-stats">
+          <span>Loading lessons...</span>
+        </div>
+        <div class="roadmap mb-8" style="max-width:100%">
+          <div class="roadmap-item">
+            <div class="roadmap-step" style="background:#DCFCE7;color:var(--accent-dark)">B</div>
+            <div class="roadmap-content">
+              <h4>Beginner</h4>
+              <p>Home row, top row, bottom row, and simple sentences</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step" style="background:var(--primary-light);color:var(--primary)">I</div>
+            <div class="roadmap-content">
+              <h4>Intermediate</h4>
+              <p>Numbers, punctuation, speed and accuracy builders</p>
+            </div>
+          </div>
+          <div class="roadmap-item">
+            <div class="roadmap-step" style="background:#FED7AA;color:var(--warning-dark)">A</div>
+            <div class="roadmap-content">
+              <h4>Advanced</h4>
+              <p>Paragraphs, symbols, exam simulation, mastery challenge</p>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-filters">
+          <div class="lesson-filter-group">
+            <input type="search" class="lesson-search" id="lesson-search" placeholder="Search lessons by title or description..." aria-label="Search lessons">
+          </div>
+          <div class="lesson-filter-group">
+            <select class="lesson-select" id="lesson-level-filter" aria-label="Filter by level">
+              <option value="all">All Levels</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="lesson-filter-group">
+            <select class="lesson-select" id="lesson-row-filter" aria-label="Filter by keyboard row">
+              <option value="all">All Rows</option>
+              <option value="home">Home Row</option>
+              <option value="top">Top Row</option>
+              <option value="bottom">Bottom Row</option>
+              <option value="numbers">Numbers</option>
+              <option value="punctuation">Punctuation</option>
+            </select>
+          </div>
+        </div>
+        <div class="lesson-grid" id="lesson-grid"></div>
+      </div>
+    </section>
+    <section class="cta-section">
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2606;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2>Ready to start your next lesson?</h2>
+          <p>Every lesson builds your keyboard confidence. Keep practicing and watch your speed grow.</p>
+          <div class="cta-actions">
+            <a href="lesson-player.html?lesson=B1" class="btn btn-primary btn-lg btn-arrow">Start a Lesson</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/lesson-data.js"></script>
+  <script>
+  (function() {
+    var progress = {};
+    try {
+      progress = JSON.parse(localStorage.getItem('typeskill_lessons') || '{}');
+    } catch(e) {}
+
+    function getLessonProgress(lessonId) {
+      return progress[lessonId] || {};
+    }
+
+    function isLessonUnlocked(lesson) {
+      if (lesson.level === 'beginner') return true;
+      var idx = LESSON_DATA.indexOf(lesson);
+      if (idx <= 0) return true;
+      var prev = LESSON_DATA[idx - 1];
+      var prevProg = getLessonProgress(prev.id);
+      return prevProg.completed === true;
+    }
+
+    function rowLabel(row) {
+      var map = { home: 'Home', top: 'Top', bottom: 'Bottom', numbers: 'Numbers', punctuation: 'Punctuation' };
+      return map[row] || row;
+    }
+
+    function renderLessons() {
+      var grid = document.getElementById('lesson-grid');
+      var searchVal = (document.getElementById('lesson-search').value || '').toLowerCase();
+      var levelVal = document.getElementById('lesson-level-filter').value;
+      var rowVal = document.getElementById('lesson-row-filter').value;
+
+      var filtered = LESSON_DATA.filter(function(l) {
+        if (levelVal !== 'all' && l.level !== levelVal) return false;
+        if (rowVal !== 'all' && l.row !== rowVal) return false;
+        if (searchVal && l.title.toLowerCase().indexOf(searchVal) === -1 &&
+            l.description.toLowerCase().indexOf(searchVal) === -1) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="lesson-empty"><p>No lessons match your filters</p><p class="text-muted">Try adjusting your search or filter criteria</p></div>';
+        return;
+      }
+
+      var completedCount = 0;
+      var html = '';
+      filtered.forEach(function(l) {
+        var lp = getLessonProgress(l.id);
+        var completed = lp.completed === true;
+        var unlocked = isLessonUnlocked(l);
+        var bestWpm = lp.bestWpm || 0;
+        var bestAccuracy = lp.bestAccuracy || 0;
+        var lockedClass = unlocked ? '' : ' locked';
+        var completedClass = completed ? ' completed' : '';
+        if (completed) completedCount++;
+
+        var pct = completed ? 100 : 0;
+        var badgeClass = l.level;
+        var btnHtml = '';
+        if (completed) {
+          btnHtml = '<a href="lesson-player.html?lesson=' + l.id + '" class="lesson-btn lesson-btn-secondary">Review</a>';
+          if (bestWpm > 0) {
+            btnHtml += '<span class="lesson-card-meta"><span>Best: ' + bestWpm + ' WPM / ' + bestAccuracy + '%</span></span>';
+          }
+        } else if (unlocked) {
+          btnHtml = '<a href="lesson-player.html?lesson=' + l.id + '" class="lesson-btn lesson-btn-primary">Start</a>';
+        } else {
+          btnHtml = '<button class="lesson-btn lesson-btn-secondary" disabled>Locked</button>';
+        }
+
+        html += '<div class="lesson-card' + lockedClass + completedClass + '">';
+        html += '<div class="lesson-card-top">';
+        html += '<div>';
+        html += '<span class="lesson-badge ' + badgeClass + '">' + l.level + '</span>';
+        html += '<span class="lesson-row-tag" style="margin-left:8px">' + rowLabel(l.row) + '</span>';
+        html += '</div>';
+        html += '<span style="color:#666;font-size:0.75rem;font-family:var(--font-mono)">' + l.id + '</span>';
+        html += '</div>';
+        html += '<div class="lesson-card-title">' + l.title + '</div>';
+        html += '<div class="lesson-card-desc">' + l.description + '</div>';
+        html += '<div class="lesson-card-meta">';
+        html += '<span>' + l.estimatedMinutes + ' min</span>';
+        html += '<span>' + l.practiceText.split(' ').length + ' words</span>';
+        html += '<span>Target: ' + l.wpmTarget + ' WPM</span>';
+        html += '</div>';
+        html += '<div class="lesson-progress-bar"><div class="lesson-progress-fill" style="width:' + pct + '%"></div></div>';
+        html += '<div class="lesson-card-actions">' + btnHtml + '</div>';
+        html += '</div>';
+      });
+
+      grid.innerHTML = html;
+
+      var statsEl = document.getElementById('lesson-stats');
+      var total = LESSON_DATA.length;
+      var overallPct = Math.round(completedCount / total * 100);
+      statsEl.innerHTML = '<strong>' + completedCount + ' of ' + total + ' lessons completed</strong><span class="progress-text">Overall progress: ' + overallPct + '%</span>';
+
+      var heroEl = document.getElementById('hero-completed-lessons');
+      if (heroEl) heroEl.textContent = completedCount;
+
+      var continueBtn = document.getElementById('continue-lesson-btn');
+      if (continueBtn) {
+        var lastId = null;
+        for (var k in progress) {
+          if (progress[k] && progress[k].completed) lastId = k;
+        }
+        if (lastId) {
+          var idx = LESSON_DATA.findIndex(function(l) { return l.id === lastId; });
+          if (idx >= 0 && idx < LESSON_DATA.length - 1) {
+            var nextId = LESSON_DATA[idx + 1].id;
+            continueBtn.href = 'lesson-player.html?lesson=' + nextId;
+          } else {
+            continueBtn.href = 'lesson-player.html?lesson=' + lastId;
+            continueBtn.textContent = 'Review Completed Lessons';
+          }
+        }
+      }
+    }
+
+    document.getElementById('lesson-search').addEventListener('input', renderLessons);
+    document.getElementById('lesson-level-filter').addEventListener('change', renderLessons);
+    document.getElementById('lesson-row-filter').addEventListener('change', renderLessons);
+
+    renderLessons();
+  })();
+  </script>
+</body>
+</html>

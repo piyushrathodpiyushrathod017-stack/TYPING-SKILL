@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Tracker — TypeSkill</title>
+  <meta name="description" content="Track your typing progress over time. View your best WPM, accuracy, practice history, and improvement trends.">
+  <meta property="og:title" content="Progress Tracker — TypeSkill">
+  <meta property="og:description" content="Track your typing progress over time. View your best WPM, accuracy, practice history, and improvement trends.">
+  <meta property="og:url" content="https://typeskill.academy/progress-tracker.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Progress Tracker — TypeSkill">
+  <meta name="twitter:description" content="Track your typing progress over time. View your best WPM, accuracy, practice history, and improvement trends.">
+  <link rel="canonical" href="https://typeskill.academy/progress-tracker.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Progress Tracker","item":"https://typeskill.academy/progress-tracker.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Progress Tracker</li></ol></nav>
+        <h1>Progress Tracker</h1>
+        <p>Monitor your typing improvement over time</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <div style="font-size:2rem;color:var(--primary);font-weight:700" id="prog-wpm">0</div>
+            <div class="stat-label">Best WPM</div>
+          </div>
+          <div class="dashboard-card">
+            <div style="font-size:2rem;color:var(--accent);font-weight:700" id="prog-accuracy">0%</div>
+            <div class="stat-label">Best Accuracy</div>
+          </div>
+          <div class="dashboard-card">
+            <div style="font-size:2rem;color:var(--warning);font-weight:700" id="prog-lessons">0</div>
+            <div class="stat-label">Lessons Completed</div>
+          </div>
+          <div class="dashboard-card">
+            <div style="font-size:2rem;color:var(--primary);font-weight:700" id="prog-streak">0 days</div>
+            <div class="stat-label">Practice Streak</div>
+          </div>
+        </div>
+        <div class="card mt-6" id="lesson-progress-section">
+          <h3 class="mb-4">Lesson Progress</h3>
+          <div id="lesson-progress-table">
+            <p class="text-secondary">Loading lesson data...</p>
+          </div>
+        </div>
+        <div class="card mt-4">
+          <h3 class="mb-4">Important Note</h3>
+          <p class="text-secondary">Progress data is saved in your browser's local storage. This means your data stays private on your device. If you clear your browser data or use a different device, your progress will reset. We recommend practicing regularly on the same device to track improvement.</p>
+        </div>
+
+        <div class="card mt-4">
+          <h3 class="mb-4">Tips for Improvement</h3>
+          <ul style="list-style:disc;margin-left:20px">
+            <li class="text-secondary mb-2">Practice for at least 15 minutes every day</li>
+            <li class="text-secondary mb-2">Focus on accuracy before speed</li>
+            <li class="text-secondary mb-2">Use all ten fingers and proper home row position</li>
+            <li class="text-secondary mb-2">Take a speed test once a week to measure progress</li>
+            <li class="text-secondary mb-2">Try the typing games for a fun way to build skills</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/lesson-data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+  <script>
+  (function() {
+    function safeGet(key, fallback) {
+      try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch(e) { return fallback; }
+    }
+
+    function renderLessonProgress() {
+      var prog = safeGet('typeskill_lessons', {});
+      var data = safeGet('typeskill_progress', {});
+      var container = document.getElementById('lesson-progress-table');
+      if (!container) return;
+      if (typeof LESSON_DATA === 'undefined') {
+        container.innerHTML = '<p class="text-secondary">Lesson data not available.</p>';
+        return;
+      }
+
+      var progWpm = document.getElementById('prog-wpm');
+      var progAccuracy = document.getElementById('prog-accuracy');
+      var progLessons = document.getElementById('prog-lessons');
+      var progStreak = document.getElementById('prog-streak');
+
+      var completed = 0;
+      var bestWpm = data.bestWpm || 0;
+      var bestAccuracy = data.bestAccuracy || 0;
+
+      var html = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:0.9rem">';
+      html += '<thead><tr style="border-bottom:2px solid var(--border);text-align:left">';
+      html += '<th style="padding:10px 12px;font-weight:600">Lesson</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Title</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Level</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Status</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Best WPM</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Best Accuracy</th>';
+      html += '<th style="padding:10px 12px;font-weight:600">Attempts</th>';
+      html += '</tr></thead><tbody>';
+
+      LESSON_DATA.forEach(function(l) {
+        var lp = prog[l.id] || {};
+        var done = lp.completed ? 'Completed' : 'Not started';
+        var wpm = lp.bestWpm || '-';
+        var acc = lp.bestAccuracy ? lp.bestAccuracy + '%' : '-';
+        var attempts = lp.attempts || '-';
+        if (lp.completed) { completed++; if (lp.bestWpm > bestWpm) bestWpm = lp.bestWpm; if (lp.bestAccuracy > bestAccuracy) bestAccuracy = lp.bestAccuracy; }
+        var statusColor = lp.completed ? 'var(--accent)' : 'var(--text-muted)';
+        html += '<tr style="border-bottom:1px solid var(--border)">';
+        html += '<td style="padding:10px 12px;font-family:var(--font-mono);font-size:0.8rem">' + l.id + '</td>';
+        html += '<td style="padding:10px 12px">' + l.title + '</td>';
+        html += '<td style="padding:10px 12px;text-transform:capitalize">' + l.level + '</td>';
+        html += '<td style="padding:10px 12px;color:' + statusColor + ';font-weight:500">' + done + '</td>';
+        html += '<td style="padding:10px 12px">' + wpm + '</td>';
+        html += '<td style="padding:10px 12px">' + acc + '</td>';
+        html += '<td style="padding:10px 12px">' + attempts + '</td>';
+        html += '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+      html += '<p class="text-secondary mt-4">' + completed + ' of ' + LESSON_DATA.length + ' lessons completed</p>';
+      container.innerHTML = html;
+
+      if (progWpm) progWpm.textContent = bestWpm || 0;
+      if (progAccuracy) progAccuracy.textContent = (bestAccuracy || 0) + '%';
+      if (progLessons) progLessons.textContent = completed || 0;
+      if (progStreak) progStreak.textContent = (data.streak || 0) + ' days';
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderLessonProgress);
+    } else {
+      renderLessonProgress();
+    }
+  })();
+  </script>
+
+  <section class="cta-section">
+    <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+    <div class="cta-floating" aria-hidden="true">&#x2606;</div>
+    <div class="container">
+      <div class="cta-card">
+        <h2>Ready to improve your typing scores?</h2>
+        <p>Keep practicing to beat your personal bests and track your growth.</p>
+        <div class="cta-actions">
+          <a href="typing-practice.html" class="btn btn-primary btn-lg btn-arrow">Start Free Practice</a>
+          <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

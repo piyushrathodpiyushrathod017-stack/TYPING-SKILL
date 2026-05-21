@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Practice — TypeSkill</title>
+  <meta name="description" content="Free typing practice with beginner words, common sentences, and student paragraphs. Build speed and accuracy with guided exercises.">
+  <meta property="og:title" content="Typing Practice — TypeSkill">
+  <meta property="og:description" content="Practice typing with words, sentences, and paragraphs at your level.">
+  <meta property="og:url" content="https://typeskill.academy/typing-practice.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Typing Practice — TypeSkill">
+  <meta name="twitter:description" content="Practice typing with words, sentences, and paragraphs at your level.">
+  <link rel="canonical" href="https://typeskill.academy/typing-practice.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Typing Practice","item":"https://typeskill.academy/typing-practice.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-header">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Typing Practice</li></ol></nav>
+        <h1>Typing Practice</h1>
+        <p>Build your typing skills with structured practice exercises</p>
+      </div>
+    </section>
+    <div class="tool-container">
+      <div class="tool-card">
+        <h2>Word Practice</h2>
+        <p class="text-secondary text-small mb-4">Type each word and press space to move to the next. Practice for 60 seconds.</p>
+        <div class="flex-between mb-4 flex-wrap gap-2">
+          <div class="flex gap-2">
+            <button class="btn btn-sm btn-secondary level-btn active" data-level="beginner">Beginner</button>
+            <button class="btn btn-sm btn-secondary level-btn" data-level="common">Common</button>
+            <button class="btn btn-sm btn-secondary level-btn" data-level="student">Student</button>
+          </div>
+          <div class="timer-display" id="word-timer" style="font-size:1.25rem">0:00</div>
+        </div>
+        <div class="words-display" id="word-display" aria-label="Type these words"></div>
+        <input type="text" class="form-input" id="word-input" placeholder="Type word and press space..." autocomplete="off" aria-label="Type the current word">
+        <div class="flex-between mt-4">
+          <div class="flex gap-2">
+            <button class="btn btn-primary" id="word-start">Start Practice</button>
+            <button class="btn btn-secondary" id="word-restart">Restart</button>
+          </div>
+        </div>
+      </div>
+      <div class="result-card hidden" id="word-result">
+        <h3>Practice Results</h3>
+        <div class="result-stats">
+          <div class="stat-item"><span class="stat-number" id="word-wpm">0</span><span class="stat-label">WPM</span></div>
+          <div class="stat-item"><span class="stat-number" id="word-accuracy">0%</span><span class="stat-label">Accuracy</span></div>
+        </div>
+      </div>
+      <div class="content mt-4">
+        <h2>How to Practice Effectively</h2>
+        <p>Choose the level that matches your skill. Beginners should start with common short words. As you improve, move to longer vocabulary words and full sentences. Consistent practice of 15 minutes daily produces better results than long sessions once a week.</p>
+        <p>Focus on accuracy first. It is better to type 20 words per minute with 98 percent accuracy than 40 WPM with 80 percent accuracy. Speed will increase naturally as your fingers learn the keyboard layout.</p>
+      </div>
+    </div>
+  </main>
+  
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/practice.js"></script>
+
+    <section class="cta-section">
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2606;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2>Ready to improve your typing skills?</h2>
+          <p>Consistent practice is the key to building speed and accuracy. Keep typing every day.</p>
+          <div class="cta-actions">
+            <a href="lessons.html" class="btn btn-primary btn-lg btn-arrow">Start a Lesson</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

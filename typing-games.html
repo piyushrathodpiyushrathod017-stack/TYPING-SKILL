@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Games — TypeSkill</title>
+  <meta name="description" content="Free educational typing games. Play falling words and timed challenge games to improve your typing skills while having fun.">
+  <meta property="og:title" content="Typing Games — TypeSkill">
+  <meta property="og:description" content="Fun typing games to build keyboard skills.">
+  <meta property="og:url" content="https://typeskill.academy/typing-games.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Typing Games — TypeSkill">
+  <meta name="twitter:description" content="Fun typing games to build keyboard skills.">
+  <link rel="canonical" href="https://typeskill.academy/typing-games.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Typing Games","item":"https://typeskill.academy/typing-games.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero-premium" style="padding-bottom:32px">
+      <div class="hero-bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Typing Games</li></ol></nav>
+        <h1><span class="hero-gradient-text">Typing Games</span></h1>
+        <p class="hero-subtitle">Build your typing skills through fun, interactive games. Type words to defeat space enemies in the Space Jet battle!</p>
+      </div>
+    </section>
+    <div class="game-container">
+
+      <!-- Space Jet Game -->
+      <div class="tool-card" id="space-game-section">
+        <div class="flex-between mb-2">
+          <h2>Space Typing Battle</h2>
+          <span class="text-small text-muted">Type words to shoot</span>
+        </div>
+        <p class="text-secondary text-small mb-4">Type falling words to destroy them with your fighter jet. Survive as long as you can and score points.</p>
+        <div class="space-game-wrapper">
+          <canvas id="spaceCanvas"></canvas>
+          <div class="game-hud">
+            <span class="game-hud-item">Score: <strong id="space-score">0</strong></span>
+            <span class="game-hud-item">Lives: <strong id="space-lives">&#x2764;&#x2764;&#x2764;</strong></span>
+            <span class="game-hud-item">Wave: <strong id="space-wave">1</strong></span>
+            <span class="game-hud-item" id="space-combo-display" style="display:none">&#x1F525; <strong id="space-combo">0</strong></span>
+            <span class="game-hud-item">Accuracy: <strong id="space-accuracy">100%</strong></span>
+            <span class="game-hud-item">Words: <strong id="space-words">0</strong></span>
+          </div>
+          <button class="game-sound-toggle" id="space-sound-toggle" aria-label="Toggle sound">&#x1F50A;</button>
+          <div class="game-overlay" id="space-overlay">
+            <h2>Space Typing Battle</h2>
+            <p>Type the words that appear to destroy enemy ships. Chain combos for bonus points. You have 3 lives &mdash; survive through waves of increasing difficulty!</p>
+            <div class="game-difficulty">
+              <button class="game-diff-btn active" data-diff="easy">Easy</button>
+              <button class="game-diff-btn" data-diff="medium">Medium</button>
+              <button class="game-diff-btn" data-diff="hard">Hard</button>
+            </div>
+            <button class="btn" id="space-start-btn">Start Game</button>
+          </div>
+          <div class="game-overlay hidden" id="space-gameover">
+            <h2>Game Over</h2>
+            <p id="space-final-msg">You scored 0 points</p>
+            <div class="flex gap-4" style="justify-content:center;flex-wrap:wrap;margin-bottom:16px;color:rgba(255,255,255,0.8);font-size:0.9rem">
+              <span>Score: <strong id="space-final-score">0</strong></span>
+              <span>Words: <strong id="space-final-words">0</strong></span>
+              <span>Accuracy: <strong id="space-final-accuracy">0%</strong></span>
+              <span>Wave: <strong id="space-final-wave">1</strong></span>
+              <span>Best Combo: <strong id="space-final-combo">0</strong></span>
+            </div>
+            <button class="btn" id="space-restart-btn">Play Again</button>
+          </div>
+        </div>
+        <input type="text" class="game-input" id="space-input" placeholder="Type word and press Enter..." autocomplete="off" aria-label="Type words to destroy" style="margin-bottom:0">
+      </div>
+
+      <div class="tool-card mt-4">
+        <h2>Falling Words</h2>
+        <p class="text-secondary text-small mb-4">Type the falling words before they reach the bottom. Score as many points as you can in 60 seconds.</p>
+        <div class="flex-between mb-2">
+          <span class="game-score" id="game-score">0</span>
+          <span class="timer-display" id="game-timer" style="font-size:1.25rem">1:00</span>
+        </div>
+        <div class="game-canvas-wrapper">
+          <canvas id="gameCanvas"></canvas>
+        </div>
+        <input type="text" class="game-input" id="game-input" placeholder="Type word and press Enter..." autocomplete="off" aria-label="Type falling words">
+        <div class="flex-between mt-4">
+          <button class="btn btn-primary" id="game-start">Start Game</button>
+          <button class="btn btn-secondary" id="game-restart">Restart</button>
+        </div>
+        <div class="result-card hidden mt-4" id="game-over">
+          <h3>Game Over</h3>
+          <div class="result-stats">
+            <div class="stat-item"><span class="stat-number" id="final-score">0</span><span class="stat-label">Words Typed</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tool-card mt-4">
+        <h2>Timed Word Challenge</h2>
+        <p class="text-secondary text-small mb-4">Type as many words as possible in 30 seconds. Press Enter after each word.</p>
+        <div class="flex-between mb-4">
+          <span class="game-score" id="challenge-score">0</span>
+          <span class="timer-display" id="challenge-timer" style="font-size:1.25rem">30s</span>
+        </div>
+        <div class="card mb-4" style="font-size:1.5rem;padding:24px;text-align:center;font-weight:600;color:var(--primary)" id="challenge-word">ready</div>
+        <input type="text" class="game-input" id="challenge-input" placeholder="Type the word and press Enter..." autocomplete="off" aria-label="Type the challenge word">
+        <div class="flex-between mt-4">
+          <button class="btn btn-primary" id="challenge-start">Start Challenge</button>
+          <button class="btn btn-secondary" id="challenge-restart">Restart</button>
+        </div>
+        <div class="result-card hidden mt-4" id="challenge-result">
+          <h3>Challenge Complete</h3>
+          <div class="result-stats">
+            <div class="stat-item"><span class="stat-number" id="challenge-final">0</span><span class="stat-label">Words Typed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+    <section class="cta-section">
+      <div class="cta-floating" aria-hidden="true">&#x1F3AE;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2>Want more typing practice?</h2>
+          <p>Combine games with structured lessons for the best learning experience.</p>
+          <div class="cta-actions">
+            <a href="lessons.html" class="btn btn-primary btn-lg btn-arrow">Start a Lesson</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/games.js"></script>
+  <script src="assets/js/space-game.js"></script>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

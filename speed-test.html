@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Speed Test — TypeSkill</title>
+  <meta name="description" content="Free typing speed test. Measure your WPM, accuracy, and mistakes with 1, 3, or 5 minute timed tests.">
+  <meta property="og:title" content="Typing Speed Test — TypeSkill">
+  <meta property="og:description" content="Test your typing speed for free. Get WPM, accuracy, and mistake results.">
+  <meta property="og:url" content="https://typeskill.academy/speed-test.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Typing Speed Test — TypeSkill">
+  <meta name="twitter:description" content="Test your typing speed for free. Get WPM, accuracy, and mistake results.">
+  <link rel="canonical" href="https://typeskill.academy/speed-test.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Speed Test","item":"https://typeskill.academy/speed-test.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero-premium" style="padding-bottom:32px">
+      <div class="hero-bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Speed Test</li></ol></nav>
+        <h1><span class="hero-gradient-text">Typing Speed Test</span></h1>
+        <p class="hero-subtitle">Measure your typing speed in words per minute with our precise timed test. Track your improvement over time.</p>
+      </div>
+    </section>
+    <div class="tool-container">
+      <div class="tool-card">
+        <div class="tool-header">
+          <div>
+            <span class="text-muted text-small">Select test duration:</span>
+            <div class="tool-controls mt-2">
+              <button class="btn btn-sm btn-secondary time-btn" data-time="1">1 min</button>
+              <button class="btn btn-sm btn-secondary time-btn active" data-time="3">3 min</button>
+              <button class="btn btn-sm btn-secondary time-btn" data-time="5">5 min</button>
+            </div>
+          </div>
+          <div class="timer-display" id="timer">3:00</div>
+        </div>
+        <div class="test-timer-bar">
+          <div class="test-timer-fill" id="timer-fill" style="width:100%"></div>
+        </div>
+        <div class="typing-area" id="text-display" aria-label="Text to type"></div>
+        <textarea class="typing-textarea" id="user-input" placeholder="Start typing here when the test begins..." aria-label="Type the text above"></textarea>
+        <div class="flex-between mt-4">
+          <button class="btn btn-primary" id="start-btn">Start Test</button>
+          <button class="btn btn-secondary" id="restart-btn">Restart</button>
+        </div>
+      </div>
+      <div class="result-card hidden" id="result-card">
+        <h3>Your Results</h3>
+        <div id="result-message" class="result-message"></div>
+        <div class="result-stats">
+          <div class="stat-item"><span class="stat-number" id="wpm-result">0</span><span class="stat-label">WPM</span></div>
+          <div class="stat-item"><span class="stat-number" id="accuracy-result">0%</span><span class="stat-label">Accuracy</span></div>
+          <div class="stat-item"><span class="stat-number" id="mistakes-result">0</span><span class="stat-label">Mistakes</span></div>
+          <div class="stat-item"><span class="stat-number" id="char-typed-result">0</span><span class="stat-label">Characters</span></div>
+        </div>
+        <div class="flex gap-4" style="justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:white" id="try-again-btn">Try Again</button>
+          <a href="lessons.html" class="btn btn-sm" style="background:rgba(255,255,255,0.15);color:white">Practice Lessons</a>
+        </div>
+      </div>
+      <div class="content mt-4">
+        <h2>How Typing Speed Is Measured</h2>
+        <p>Words per minute (WPM) is calculated by dividing the number of characters typed correctly by five, then dividing by the time in minutes. This standard formula accounts for average word length. Accuracy is the percentage of correctly typed characters out of total characters typed.</p>
+        <p>Regular speed testing helps track improvement and identify areas for practice. Try to maintain accuracy above 90 percent while gradually increasing your speed.</p>
+      </div>
+    </div>
+  </main>
+  
+    <section class="cta-section">
+      <div class="cta-floating" aria-hidden="true">&#x26A1;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2>Ready to improve your typing speed?</h2>
+          <p>Combine speed tests with structured lessons for the fastest improvement.</p>
+          <div class="cta-actions">
+            <a href="lessons.html" class="btn btn-primary btn-lg btn-arrow">Take a Lesson</a>
+            <a href="typing-practice.html" class="btn btn-secondary btn-lg">Word Practice</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/typing-test.js"></script>
+</body>
+</html>
+

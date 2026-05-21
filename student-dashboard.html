@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — TypeSkill</title>
+  <meta name="description" content="View your typing progress dashboard. Track WPM, accuracy, lessons completed, and practice streaks.">
+  <meta property="og:title" content="Student Dashboard — TypeSkill">
+  <meta property="og:description" content="View your typing progress dashboard. Track WPM, accuracy, lessons completed, and practice streaks.">
+  <meta property="og:url" content="https://typeskill.academy/student-dashboard.html">
+  <meta property="og:image" content="https://typeskill.academy/assets/img/logo.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Student Dashboard — TypeSkill">
+  <meta name="twitter:description" content="View your typing progress dashboard. Track WPM, accuracy, lessons completed, and practice streaks.">
+  <link rel="canonical" href="https://typeskill.academy/student-dashboard.html">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Dashboard","item":"https://typeskill.academy/student-dashboard.html"}]}
+</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="TypeSkill home">
+        <div class="logo-icon" role="img" aria-label="T">T</div>
+        <div class="logo-text">TypeSkill</div>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="speed-test.html">Speed Test</a>
+        <a href="typing-practice.html">Practice</a>
+        <a href="typing-games.html">Games</a>
+        <a href="blog.html">Blog</a>
+        <a href="student-dashboard.html" class="nav-cta">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="dashboard-welcome" id="dash-welcome">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li aria-current="page">Dashboard</li></ol></nav>
+        <h1>Student Dashboard</h1>
+        <p class="welcome-sub" id="dash-greeting">Your typing progress at a glance</p>
+        <div class="welcome-suggestion" id="dash-suggestion">
+          &#x1F4A1; Start your first lesson to begin tracking progress
+        </div>
+      </div>
+    </section>
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div id="dash-empty" class="dash-empty">
+          <div class="dash-empty-icon">&#x2328;</div>
+          <h2>Welcome to TypeSkill!</h2>
+          <p>Start your typing journey. Take a lesson, try a speed test, or practice with words. Your progress will appear here.</p>
+          <div class="cta-actions">
+            <a href="lessons.html" class="btn btn-primary btn-lg">Start First Lesson</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+
+        <div id="dash-content" class="hidden">
+          <div class="dashboard-grid-3">
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:var(--primary-light);color:var(--primary)">&#x26A1;</div>
+              <span class="dash-value" id="dash-wpm">0</span>
+              <span class="dash-label">Best WPM</span>
+            </div>
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:#DCFCE7;color:var(--accent)">&#x2713;</div>
+              <span class="dash-value" id="dash-accuracy">0%</span>
+              <span class="dash-label">Best Accuracy</span>
+            </div>
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:#FED7AA;color:var(--warning)">&#x1F4DA;</div>
+              <span class="dash-value" id="dash-lessons">0</span>
+              <span class="dash-label">Lessons Done</span>
+            </div>
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:#F3E8FF;color:#7C3AED">&#x1F525;</div>
+              <span class="dash-value" id="dash-streak">0 days</span>
+              <span class="dash-label">Practice Streak</span>
+            </div>
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:#DBEAFE;color:#1D4ED8">&#x1F3AE;</div>
+              <span class="dash-value" id="dash-games">0</span>
+              <span class="dash-label">Games Score</span>
+            </div>
+            <div class="dash-stat-card card-lift">
+              <div class="dash-icon" style="background:#DCFCE7;color:#16A34A">&#x1F3C6;</div>
+              <span class="dash-value" id="dash-certificates">0</span>
+              <span class="dash-label">Certificates</span>
+            </div>
+          </div>
+
+          <div class="progress-section">
+            <div class="progress-block">
+              <h3>Learning Progress</h3>
+              <div class="progress-stat-row">
+                <span class="label">Lessons completed</span>
+                <span class="value" id="progress-lessons-pct">0%</span>
+              </div>
+              <div class="progress-bar-lg">
+                <div class="progress-fill-lg" id="progress-lessons-bar" style="width:0%"></div>
+              </div>
+              <div class="progress-stat-row">
+                <span class="label">Speed goal</span>
+                <span class="value" id="progress-speed-text">0 WPM</span>
+              </div>
+              <div class="progress-bar-lg">
+                <div class="progress-fill-lg" id="progress-speed-bar" style="width:0%;background:linear-gradient(90deg,var(--accent),#22C55E)"></div>
+              </div>
+              <div class="progress-stat-row">
+                <span class="label">Accuracy goal</span>
+                <span class="value" id="progress-accuracy-text">0%</span>
+              </div>
+              <div class="progress-bar-lg">
+                <div class="progress-fill-lg" id="progress-accuracy-bar" style="width:0%;background:linear-gradient(90deg,var(--warning),#F97316)"></div>
+              </div>
+            </div>
+            <div class="progress-block">
+              <h3>Recent Activity</h3>
+              <div class="activity-list" id="activity-list">
+                <div class="activity-item">
+                  <span class="activity-dot blue"></span>
+                  <span>No activity yet. Start practicing!</span>
+                </div>
+              </div>
+              <h3 class="mt-6">Recommendations</h3>
+              <div class="recommended-grid mt-4" id="recommend-grid">
+                <a href="lessons.html" class="recommend-item">
+                  <div class="recommend-icon" style="background:var(--primary-light);color:var(--primary)">&#x1F4DA;</div>
+                  <div class="recommend-text">
+                    <div class="recommend-title">Continue Lessons</div>
+                    <div class="recommend-desc">Build skills step by step</div>
+                  </div>
+                </a>
+                <a href="speed-test.html" class="recommend-item">
+                  <div class="recommend-icon" style="background:#DCFCE7;color:var(--accent)">&#x26A1;</div>
+                  <div class="recommend-text">
+                    <div class="recommend-title">Take Speed Test</div>
+                    <div class="recommend-desc">Measure your WPM</div>
+                  </div>
+                </a>
+                <a href="typing-games.html" class="recommend-item">
+                  <div class="recommend-icon" style="background:#FED7AA;color:var(--warning)">&#x1F3AE;</div>
+                  <div class="recommend-text">
+                    <div class="recommend-title">Play Typing Game</div>
+                    <div class="recommend-desc">Fun practice with Space Jet</div>
+                  </div>
+                </a>
+                <a href="certificate.html" class="recommend-item">
+                  <div class="recommend-icon" style="background:#F3E8FF;color:#7C3AED">&#x1F3C6;</div>
+                  <div class="recommend-text">
+                    <div class="recommend-title">Get Certificate</div>
+                    <div class="recommend-desc">Celebrate your progress</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-lift" id="badges-section">
+            <h3>Achievement Badges</h3>
+            <div class="badges-grid mt-4" id="badges-grid">
+              <div class="badge-item" data-badge="first-lesson">
+                <span class="badge-icon">&#x1F393;</span>
+                <span class="badge-name">First Lesson</span>
+              </div>
+              <div class="badge-item" data-badge="accuracy-starter">
+                <span class="badge-icon">&#x1F3AF;</span>
+                <span class="badge-name">Accuracy Starter</span>
+              </div>
+              <div class="badge-item" data-badge="speed-builder">
+                <span class="badge-icon">&#x26A1;</span>
+                <span class="badge-name">Speed Builder</span>
+              </div>
+              <div class="badge-item" data-badge="streak-7">
+                <span class="badge-icon">&#x1F525;</span>
+                <span class="badge-name">7-Day Practice</span>
+              </div>
+              <div class="badge-item" data-badge="game-starter">
+                <span class="badge-icon">&#x1F3AE;</span>
+                <span class="badge-name">Game Starter</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-6">
+            <p class="text-secondary mb-4">Your data is saved locally on your device. No account needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="cta-section">
+      <div class="cta-floating" aria-hidden="true">&#x1F4CA;</div>
+      <div class="cta-floating" aria-hidden="true">&#x2328;</div>
+      <div class="container">
+        <div class="cta-card">
+          <h2>Keep building your skills</h2>
+          <p>Your dashboard shows your progress. Take the next step to improve your typing today.</p>
+          <div class="cta-actions">
+            <a href="lessons.html" class="btn btn-primary btn-lg btn-arrow">Continue Lessons</a>
+            <a href="speed-test.html" class="btn btn-secondary btn-lg">Take Speed Test</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" aria-label="TypeSkill home">
+            <div class="logo-icon" role="img" aria-label="T">T</div>
+            <div class="logo-text">TypeSkill</div>
+          </a>
+          <p>Learn typing faster with simple, guided practice. TypeSkill provides free educational typing tools for students and learners worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="lessons.html">Lessons</a>
+          <a href="speed-test.html">Speed Test</a>
+          <a href="accuracy-test.html">Accuracy Test</a>
+          <a href="typing-practice.html">Typing Practice</a>
+          <a href="typing-games.html">Typing Games</a>
+          <a href="certificate.html">Certificate</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="blog.html">Blog</a>
+          <a href="keyboard-basics.html">Keyboard Basics</a>
+          <a href="computer-basics.html">Computer Basics</a>
+          <a href="digital-literacy.html">Digital Literacy</a>
+          <a href="exam-typing-practice.html">Exam Practice</a>
+          <a href="kids-typing.html">Kids Typing</a>
+        </div>
+        <div class="footer-col">
+          <h4>Policies</h4>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="disclaimer.html">Disclaimer</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TypeSkill. All rights reserved.</span>
+        <div class="footer-social">
+
+<a href="mailto:contact@typeskill.academy" aria-label="Email">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
