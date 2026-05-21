@@ -1,6 +1,13 @@
 (function () {
   'use strict';
 
+  window.trackEvent = function trackEvent(eventName, params) {
+    if (typeof gtag === "function") {
+      params = params || {};
+      gtag("event", eventName, params);
+    }
+  };
+
   window.addEventListener('error', function(e) {
     if (e.target && (e.target.tagName === 'IMG' || e.target.tagName === 'LINK' || e.target.tagName === 'SCRIPT')) {
       return;

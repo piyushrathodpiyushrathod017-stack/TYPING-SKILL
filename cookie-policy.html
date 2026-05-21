@@ -19,6 +19,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://typeskill.academy/index.html"},{"@type":"ListItem","position":2,"name":"Cookie Policy","item":"https://typeskill.academy/cookie-policy.html"}]}
 </script>
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d3d3955f-54ec-4e46-b248-7b73ac63646f" type="text/javascript" async></script>
+<script src="assets/js/analytics-config.js"></script>
 
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -34,13 +35,13 @@
 </script>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9Q3Y4TJES"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-REPLACE_ME"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-K9Q3Y4TJES');
+  gtag('config', 'G-REPLACE_ME', { anonymize_ip: true });
 </script>
 </head>
 <body>
@@ -80,8 +81,23 @@
       <h2>Essential Cookies</h2>
       <p>Essential cookies are required for the basic operation of TypeSkill. They enable core features such as maintaining your session state and remembering your cookie consent preferences. These cookies are set automatically when you interact with the site and do not require your explicit consent, as they are necessary for the website to function properly.</p>
       <p>Essential cookies do not collect any personally identifiable information and are not used for tracking purposes. They are typically first-party cookies and are deleted when you close your browser, unless they are persistent cookies that remember your preferences across sessions.</p>
-      <h2>Preference Storage</h2>
+      <h2>Google Analytics Cookies</h2>
+      <p>If you provide consent, Google Analytics may set the following cookies on your device:</p>
+      <ul>
+        <li><strong>_ga</strong> — Used to distinguish unique users. Expires after 2 years.</li>
+        <li><strong>_ga_&lt;container-id&gt;</strong> — Used to maintain session state. Expires after 2 years.</li>
+        <li><strong>_gid</strong> — Used to distinguish users. Expires after 24 hours.</li>
+        <li><strong>_gat</strong> — Used to throttle request rate. Expires after 1 minute.</li>
+      </ul>
+      <p>These cookies collect anonymous, aggregated information about how visitors use the website. All data is transmitted with IP anonymization enabled.</p>
+      <h2>Preference Cookies</h2>
+      <p>TypeSkill may use preference cookies to remember your choices, such as cookie consent preferences (set by Cookiebot). These cookies help us provide you with a consistent experience across sessions.</p>
+      <h2>Local Storage</h2>
       <p>TypeSkill uses browser localStorage to remember your learning preferences, including theme selection, interface settings, and progress tracking. Unlike cookies, localStorage data is not automatically transmitted to servers and remains exclusively on your device. You can view and clear this data at any time through your browser's developer tools or privacy settings.</p>
+      <h2>Sound Preference</h2>
+      <p>Your sound settings for typing games and practice exercises are stored in localStorage under the key <strong>typeskill_sound_enabled</strong>. This preference stays on your device and is not transmitted to any server.</p>
+      <h2>Admin Session Storage</h2>
+      <p>If you use the optional admin analytics page, a login session entry is stored in sessionStorage. This is a temporary, non-persistent storage that is automatically cleared when you close your browser tab or log out. No personal data is stored in this session.</p>
       <h2>Third-Party Cookies</h2>
       <p>We do not use third-party cookies for advertising, tracking, or marketing purposes. If we integrate third-party services in the future, we will update this policy and seek your consent where required.</p>
       <h2>Cookie Consent Banner</h2>

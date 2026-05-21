@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard — TypeSkill Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .admin-page {
+      min-height: 100vh;
+      background: #F9FAFB;
+    }
+    .admin-header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .admin-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .admin-header h1 {
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-header h1 .badge {
+      font-size: 0.7rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .admin-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .admin-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .admin-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+    .setup-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #F3F4F6;
+    }
+    .setup-row:last-child {
+      border-bottom: none;
+    }
+    .setup-label {
+      color: var(--text-secondary);
+    }
+    .setup-value {
+      font-weight: 500;
+      color: var(--text);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .status-not-configured {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .status-configured {
+      background: #DCFCE7;
+      color: #166534;
+    }
+    .admin-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .admin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .admin-link:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid #F3F4F6;
+    }
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+    .checklist-num {
+      width: 22px;
+      height: 22px;
+      background: var(--bg-alt);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .event-tag {
+      display: inline-flex;
+      padding: 4px 10px;
+      background: var(--bg-alt);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .event-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .locked-section {
+      position: relative;
+    }
+    .locked-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+    }
+    .locked-overlay .lock-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+    .locked-overlay p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 320px;
+    }
+    .admin-footer {
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+    .admin-footer a {
+      color: var(--primary);
+    }
+    @media (max-width: 768px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-page">
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <h1>
+          <span class="logo-icon" style="width:32px;height:32px;font-size:16px">T</span>
+          Analytics Dashboard
+          <span class="badge">Admin</span>
+        </h1>
+        <div class="flex gap-4">
+          <a href="index.html" class="btn btn-sm btn-secondary">Site Home</a>
+          <button id="admin-logout" class="btn btn-sm btn-secondary" style="color:#EF4444;border-color:#FECACA">Logout</button>
+        </div>
+      </div>
+    </header>
+    <div class="admin-body">
+
+      <!-- Setup Status -->
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h2>Setup Status</h2>
+          <div class="setup-row">
+            <span class="setup-label">GA Measurement ID</span>
+            <span class="setup-value" id="ga-id-display">G-REPLACE_ME</span>
+          </div>
+          <div class="setup-row">
+            <span class="setup-label">Status</span>
+            <span id="ga-status-display"><span class="status-badge status-not-configured">Not configured</span></span>
+          </div>
+          <div class="setup-row">
+            <span class="setup-label">Netlify URL</span>
+            <span class="setup-value" id="netlify-url">typeskill.academy</span>
+          </div>
+          <div class="setup-row">
+            <span class="setup-label">Last updated</span>
+            <span class="setup-value" id="last-updated">Loading...</span>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h2>Quick Links</h2>
+          <div class="admin-links">
+            <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" class="admin-link">Open Google Analytics</a>
+            <a href="https://analytics.google.com/analytics/web/#/realtime" target="_blank" rel="noopener noreferrer" class="admin-link">Open GA Realtime</a>
+            <a href="https://app.netlify.com" target="_blank" rel="noopener noreferrer" class="admin-link">Open Netlify Dashboard</a>
+            <a href="https://app.netlify.com/sites" target="_blank" rel="noopener noreferrer" class="admin-link">Open Netlify Analytics</a>
+            <a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer" class="admin-link">Open Google Search Console</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manual Checklist -->
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h2>Setup Checklist</h2>
+          <div class="checklist-item"><span class="checklist-num">1</span> Create GA4 property in Google Analytics</div>
+          <div class="checklist-item"><span class="checklist-num">2</span> Add web data stream for your domain</div>
+          <div class="checklist-item"><span class="checklist-num">3</span> Copy Measurement ID (G-XXXXXXXXXX)</div>
+          <div class="checklist-item"><span class="checklist-num">4</span> Replace G-REPLACE_ME in analytics-config.js</div>
+          <div class="checklist-item"><span class="checklist-num">5</span> Deploy updated site to Netlify</div>
+          <div class="checklist-item"><span class="checklist-num">6</span> Open GA Realtime report</div>
+          <div class="checklist-item"><span class="checklist-num">7</span> Visit your website in another tab</div>
+          <div class="checklist-item"><span class="checklist-num">8</span> Confirm active users appear in Realtime</div>
+          <div class="checklist-item"><span class="checklist-num">9</span> Submit sitemap.xml in Google Search Console</div>
+        </div>
+
+        <div class="admin-card">
+          <h2>Event Tracking</h2>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px">The following custom events are tracked across the site:</p>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Homepage</div>
+            <div class="event-list"><span class="event-tag">click_start_practice</span><span class="event-tag">click_speed_test</span><span class="event-tag">click_dashboard</span></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Lessons</div>
+            <div class="event-list"><span class="event-tag">lesson_start</span><span class="event-tag">lesson_complete</span><span class="event-tag">lesson_filter_used</span><span class="event-tag">lesson_search_used</span></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Speed Test</div>
+            <div class="event-list"><span class="event-tag">speed_test_start</span><span class="event-tag">speed_test_complete</span><span class="event-tag">speed_test_restart</span></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Practice</div>
+            <div class="event-list"><span class="event-tag">practice_start</span><span class="event-tag">practice_complete</span><span class="event-tag">daily_challenge_start</span></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Games</div>
+            <div class="event-list"><span class="event-tag">game_start</span><span class="event-tag">game_complete</span><span class="event-tag">sound_toggle</span><span class="event-tag">difficulty_change</span></div>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Dashboard</div>
+            <div class="event-list"><span class="event-tag">dashboard_view</span><span class="event-tag">continue_learning_click</span></div>
+          </div>
+          <div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--text)">Other</div>
+            <div class="event-list"><span class="event-tag">blog_search</span><span class="event-tag">blog_category_filter</span><span class="event-tag">article_open</span><span class="event-tag">contact_form_submit_success</span><span class="event-tag">contact_form_validation_error</span><span class="event-tag">certificate_generate</span><span class="event-tag">certificate_print</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy Card -->
+      <div class="admin-card" style="margin-bottom:24px">
+        <h2>Privacy & Data Safety</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div style="padding:12px;background:#F0FDF4;border-radius:var(--radius-sm)">
+            <div style="font-size:0.85rem;font-weight:600;color:#166534">&#10003; No personal data sent</div>
+            <div style="font-size:0.8rem;color:#166534;margin-top:4px">We do not collect names, emails, or personal identifiers via analytics.</div>
+          </div>
+          <div style="padding:12px;background:#F0FDF4;border-radius:var(--radius-sm)">
+            <div style="font-size:0.85rem;font-weight:600;color:#166534">&#10003; No typed content sent</div>
+            <div style="font-size:0.8rem;color:#166534;margin-top:4px">Practice text, lesson content, and user typing is never transmitted.</div>
+          </div>
+          <div style="padding:12px;background:#F0FDF4;border-radius:var(--radius-sm)">
+            <div style="font-size:0.85rem;font-weight:600;color:#166534">&#10003; No email/message content</div>
+            <div style="font-size:0.8rem;color:#166534;margin-top:4px">Contact form message content is not tracked in analytics.</div>
+          </div>
+          <div style="padding:12px;background:#F0FDF4;border-radius:var(--radius-sm)">
+            <div style="font-size:0.85rem;font-weight:600;color:#166534">&#10003; Anonymous usage only</div>
+            <div style="font-size:0.8rem;color:#166534;margin-top:4px">Only anonymized, aggregated usage events are sent (with consent).</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Future Advanced API Dashboard -->
+      <div class="admin-card locked-section" style="margin-bottom:24px">
+        <div class="locked-overlay">
+          <div class="lock-icon">&#x1F512;</div>
+          <h3 style="margin-bottom:4px">Advanced Dashboard</h3>
+          <p>Connect Google Analytics Data API via Netlify Functions to show real traffic numbers here. Set GA_PROPERTY_ID, GA_CLIENT_EMAIL, and GA_PRIVATE_KEY in Netlify environment variables.</p>
+        </div>
+        <h2>Advanced Metrics <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">(Coming Soon)</span></h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;opacity:0.4">
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Pageviews</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Active Users</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Top Pages</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Traffic Source</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Country</div>
+          </div>
+          <div style="padding:16px;background:var(--bg-alt);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:1.5rem;font-weight:700;color:var(--text-muted)">--</div>
+            <div style="font-size:0.8rem;color:var(--text-muted)">Device Type</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:#FEF3C7;border-radius:var(--radius-sm);font-size:0.82rem;color:#92400E;line-height:1.5">
+          To show real GA numbers inside this admin page, connect Google Analytics Data API using Netlify Functions. Set environment variables in Netlify dashboard: GA_PROPERTY_ID, GA_CLIENT_EMAIL, GA_PRIVATE_KEY.
+        </div>
+      </div>
+
+    </div>
+    <div class="admin-footer">
+      TypeSkill Analytics Dashboard &mdash; <a href="privacy-policy.html">Privacy Policy</a> &mdash; <a href="cookie-policy.html">Cookie Policy</a>
+    </div>
+  </div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function() {
+      if (sessionStorage.getItem("typeskill_admin_logged_in") !== "true") {
+        window.location.replace("admin-login.html");
+        return;
+      }
+
+      document.getElementById("last-updated").textContent = new Date().toLocaleString();
+
+      var gaId = "G-REPLACE_ME";
+      if (typeof TYPESKILL_ANALYTICS_CONFIG !== "undefined" && TYPESKILL_ANALYTICS_CONFIG.gaMeasurementId) {
+        gaId = TYPESKILL_ANALYTICS_CONFIG.gaMeasurementId;
+      }
+      document.getElementById("ga-id-display").textContent = gaId;
+
+      var statusEl = document.getElementById("ga-status-display");
+      if (gaId && gaId !== "G-REPLACE_ME") {
+        statusEl.innerHTML = '<span class="status-badge status-configured">Configured</span>';
+      } else {
+        statusEl.innerHTML = '<span class="status-badge status-not-configured">Not configured</span>';
+      }
+
+      var netlifyUrl = window.location.hostname || "typeskill.academy";
+      document.getElementById("netlify-url").textContent = netlifyUrl;
+
+      document.getElementById("admin-logout").addEventListener("click", function() {
+        sessionStorage.removeItem("typeskill_admin_logged_in");
+        window.location.replace("admin-login.html");
+      });
+    })();
+  </script>
+</body>
+</html>

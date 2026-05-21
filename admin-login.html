@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — TypeSkill</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .admin-login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #EEF2FF, #F5F3FF);
+    }
+    .admin-login-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+    .admin-login-card h1 {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+    }
+    .admin-login-card p {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+    .admin-login-card .logo-icon {
+      margin: 0 auto 16px;
+    }
+    .admin-login-error {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .admin-login-error.show {
+      display: block;
+    }
+    .security-note {
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: #FEF3C7;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      color: #92400E;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-login-page">
+    <div class="admin-login-card">
+      <div class="logo-icon" style="width:48px;height:48px;font-size:24px">T</div>
+      <h1>Admin Access</h1>
+      <p>Enter your credentials to access the analytics dashboard.</p>
+      <div class="admin-login-error" id="login-error">Invalid email or password.</div>
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label for="admin-email" class="form-label">Email</label>
+          <input type="email" id="admin-email" class="form-input" placeholder="admin@typeskill.com" value="admin@typeskill.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="admin-password" class="form-label">Password</label>
+          <input type="password" id="admin-password" class="form-input" placeholder="Enter admin password" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+      <div class="security-note">
+        <strong>Note:</strong> This is a basic client-side protection. For real security, use Netlify Identity, password-protected deployments, or a server-side authentication solution.
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var ADMIN_EMAIL = "admin@typeskill.com";
+      var ADMIN_PASSWORD = "typeskill@1111";
+      var form = document.getElementById("admin-login-form");
+      var emailInput = document.getElementById("admin-email");
+      var passwordInput = document.getElementById("admin-password");
+      var errorEl = document.getElementById("login-error");
+
+      if (sessionStorage.getItem("typeskill_admin_logged_in") === "true") {
+        window.location.replace("admin-analytics.html");
+        return;
+      }
+
+      form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        errorEl.classList.remove("show");
+
+        if (emailInput.value.trim() === ADMIN_EMAIL && passwordInput.value === ADMIN_PASSWORD) {
+          sessionStorage.setItem("typeskill_admin_logged_in", "true");
+          window.location.replace("admin-analytics.html");
+        } else {
+          errorEl.textContent = "Invalid email or password. Please try again.";
+          errorEl.classList.add("show");
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
