@@ -1862,7 +1862,6 @@
       setFeedback('', '');
       ariaLive.textContent = 'Lesson started';
       hiddenInput.focus();
-      hiddenInput.setSelectionRange(hiddenInput.value.length, hiddenInput.value.length);
     }
 
     function pauseLesson() {
@@ -1884,7 +1883,6 @@
       ariaLive.textContent = 'Lesson resumed';
       updateTargetDisplay();
       hiddenInput.focus();
-      hiddenInput.setSelectionRange(hiddenInput.value.length, hiddenInput.value.length);
     }
 
     function restartLesson() {
@@ -2014,6 +2012,8 @@
     }
 
     // ===== KEYDOWN =====
+    var processingChar = false;
+
     function bindKeydown() {
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey || e.altKey || e.metaKey) return;
@@ -2023,18 +2023,16 @@
           return;
         }
         if (!isRunning || isPaused || isFinished) return;
+        if (processingChar) { processingChar = false; return; }
 
         if (e.key.length === 1) {
           e.preventDefault();
-          hiddenInput.value = '';
           processChar(e.key);
         } else if (e.key === ' ') {
           e.preventDefault();
-          hiddenInput.value = '';
           processChar(' ');
         } else if (e.key === 'Enter') {
           e.preventDefault();
-          hiddenInput.value = '';
           processChar('\n');
         }
       });
@@ -2046,6 +2044,7 @@
         if (val.length > 0) {
           var ch = val.slice(-1);
           hiddenInput.value = '';
+          processingChar = true;
           if (ch) processChar(ch);
         }
       });
@@ -2053,29 +2052,28 @@
       // Auto-refocus on blur to keep keyboard visible on mobile
       hiddenInput.addEventListener('blur', function() {
         if (isRunning && !isPaused && !isFinished) {
-          setTimeout(function() { hiddenInput.focus(); }, 10);
+          setTimeout(function() { hiddenInput.focus(); }, 300);
         }
       });
 
-      // Touch start on keyboard area for mobile
+      // Click on keyboard area refocuses input for mobile
       var kbWrapper = document.querySelector('.lp-kb-wrapper');
       if (kbWrapper) {
-        kbWrapper.addEventListener('touchstart', function(e) {
+        kbWrapper.addEventListener('click', function() {
           if (isRunning && !isPaused && !isFinished) {
-            e.preventDefault();
             hiddenInput.focus();
           }
-        }, { passive: false });
+        });
       }
 
-      // Touch on lesson-player section to keep keyboard focused on mobile
+      // Click on lesson section refocuses input
       var lpSection = document.querySelector('.lesson-player .container');
       if (lpSection) {
-        lpSection.addEventListener('touchstart', function(e) {
+        lpSection.addEventListener('click', function(e) {
           if (isRunning && !isPaused && !isFinished && e.target !== hiddenInput) {
             hiddenInput.focus();
           }
-        }, { passive: true });
+        });
       }
 
     }
