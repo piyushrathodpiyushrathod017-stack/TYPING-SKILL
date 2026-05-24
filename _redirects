@@ -1,6 +1,5 @@
 # Cloudflare Pages redirect rules
-# Custom 404 handling
-/*  /404.html  404
+# Custom 404 handled by wrangler.jsonc (not_found_handling: 404-page)
 
 # Legacy shortcuts
 /11  /admin-login.html  301
