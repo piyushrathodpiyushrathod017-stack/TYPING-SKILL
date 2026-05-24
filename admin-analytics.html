@@ -231,7 +231,7 @@
           <h2>Setup Status</h2>
           <div class="setup-row">
             <span class="setup-label">GA Measurement ID</span>
-            <span class="setup-value" id="ga-id-display">G-REPLACE_ME</span>
+            <span class="setup-value" id="ga-id-display">G-P0801YN2DY</span>
           </div>
           <div class="setup-row">
             <span class="setup-label">Status</span>
@@ -266,7 +266,7 @@
           <div class="checklist-item"><span class="checklist-num">1</span> Create GA4 property in Google Analytics</div>
           <div class="checklist-item"><span class="checklist-num">2</span> Add web data stream for your domain</div>
           <div class="checklist-item"><span class="checklist-num">3</span> Copy Measurement ID (G-XXXXXXXXXX)</div>
-          <div class="checklist-item"><span class="checklist-num">4</span> Replace G-REPLACE_ME in analytics-config.js</div>
+          <div class="checklist-item"><span class="checklist-num">4</span> Replace G-P0801YN2DY in analytics-config.js</div>
           <div class="checklist-item"><span class="checklist-num">5</span> Deploy updated site to Netlify</div>
           <div class="checklist-item"><span class="checklist-num">6</span> Open GA Realtime report</div>
           <div class="checklist-item"><span class="checklist-num">7</span> Visit your website in another tab</div>
@@ -385,14 +385,14 @@
 
       document.getElementById("last-updated").textContent = new Date().toLocaleString();
 
-      var gaId = "G-REPLACE_ME";
+      var gaId = "G-P0801YN2DY";
       if (typeof TYPESKILL_ANALYTICS_CONFIG !== "undefined" && TYPESKILL_ANALYTICS_CONFIG.gaMeasurementId) {
         gaId = TYPESKILL_ANALYTICS_CONFIG.gaMeasurementId;
       }
       document.getElementById("ga-id-display").textContent = gaId;
 
       var statusEl = document.getElementById("ga-status-display");
-      if (gaId && gaId !== "G-REPLACE_ME") {
+      if (gaId && gaId !== "G-P0801YN2DY") {
         statusEl.innerHTML = '<span class="status-badge status-configured">Configured</span>';
       } else {
         statusEl.innerHTML = '<span class="status-badge status-not-configured">Not configured</span>';
