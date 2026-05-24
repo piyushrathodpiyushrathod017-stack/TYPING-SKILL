@@ -43,6 +43,11 @@
 <style>
 /* ===== LESSON PLAYER PREMIUM STYLES ===== */
 
+:root {
+  --success: #16A34A;
+  --error: #DC2626;
+}
+
 /* --- Lesson Header Premium --- */
 .lesson-player {
   min-height: 80vh;
@@ -883,6 +888,9 @@
   .lp-finger-dot .lp-finger-name { font-size: 0.5rem; }
   .lp-thumb-area .lp-finger-icon { width: 26px; height: 20px; }
   .lp-meta-row { gap: 12px; }
+  .lp-seq-char { min-width: 36px; height: 40px; font-size: 1.1rem; }
+  .lp-seq-char.lp-seq-space { min-width: 56px; }
+  .lp-sequence-display { gap: 5px; }
 }
 
 @media (max-width: 480px) {
@@ -896,10 +904,13 @@
   .lp-stat-value { font-size: 1.1rem; }
   .lp-big-key { width: 64px; height: 64px; font-size: 1.6rem; border-width: 2px; }
   .lp-instruction-panel { padding: 20px 12px; }
-  .lp-instruction-text { font-size: 0.85rem; }
+  .lp-instru-finger, .lp-instruction-text { font-size: 0.85rem; }
   .lp-completion { padding: 28px 16px; }
   .lp-controls .lp-btn { padding: 10px 18px; font-size: 0.85rem; }
   .lp-finger-guide { display: none; }
+  .lp-seq-char { min-width: 30px; height: 34px; font-size: 0.95rem; border-width: 1px; }
+  .lp-seq-char.lp-seq-space { min-width: 44px; }
+  .lp-sequence-display { gap: 4px; }
 }
 
 @media (max-width: 360px) {
@@ -907,6 +918,9 @@
   .lp-key.lp-key-space { min-width: 60px; }
   .lp-header-card { padding: 12px; }
   .lp-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .lp-seq-char { min-width: 26px; height: 28px; font-size: 0.8rem; }
+  .lp-seq-char.lp-seq-space { min-width: 36px; }
+  .lp-sequence-display { gap: 3px; }
 }
 
 /* Reduced motion */
@@ -923,6 +937,119 @@
     animation: none !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* --- Sequence Display --- */
+.lp-sequence-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.lp-seq-char {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 52px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.lp-seq-char.lp-seq-current {
+  color: var(--primary);
+  background: var(--primary-light);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  transform: scale(1.05);
+}
+
+.lp-seq-char.lp-seq-correct {
+  color: var(--success);
+  background: #F0FDF4;
+  border-color: var(--success);
+}
+
+.lp-seq-char.lp-seq-wrong {
+  color: var(--error);
+  background: #FEF2F2;
+  border-color: var(--error);
+  animation: lpKeyShake 0.4s ease;
+}
+
+.lp-seq-char.lp-seq-space {
+  min-width: 80px;
+}
+
+.lp-seq-instruction {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* --- Mobile Focus Panel --- */
+.lp-focus-panel {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: var(--card);
+  border: 2px dashed var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lp-focus-panel.show {
+  display: block;
+}
+
+.lp-focus-panel:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.lp-focus-panel .lp-focus-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.lp-focus-panel .lp-focus-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.lp-focus-panel .lp-focus-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* --- Instruction text for sequences --- */
+.lp-instru-finger {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.lp-instru-target {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
 }
 
 /* Accessible hide */
@@ -1050,11 +1177,12 @@
   (function() {
     'use strict';
 
-    // === State ===
+    // ===== STATE =====
     var lessonId = new URLSearchParams(window.location.search).get('lesson');
     var lesson = null;
     var steps = [];
     var pos = 0;
+    var subPos = 0;
     var correctCount = 0;
     var incorrectCount = 0;
     var isRunning = false;
@@ -1069,10 +1197,9 @@
     var soundEnabled = true;
     var keyElements = {};
     var nextLesson = null;
-    var lastTyped = '';
 
-    // DOM refs
-    var $ = function(id) { return document.getElementById(id); };
+    // DOM helpers
+    function $(id) { return document.getElementById(id); }
     var content = $('lp-content');
     var errorDiv = $('lp-error');
     var errorMsg = $('lp-error-msg');
@@ -1081,20 +1208,19 @@
     var pauseOverlay = $('lp-pause-overlay');
     var hiddenInput = $('lp-hidden-input');
 
-    // === Sound Engine ===
+    // ===== SOUND ENGINE =====
     var audioCtx = null;
-
     function getAudioCtx() {
       if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
       }
       return audioCtx;
     }
-
     function playTone(freq, duration, type, volume) {
       if (!soundEnabled) return;
       try {
         var ctx = getAudioCtx();
+        if (!ctx) return;
         var osc = ctx.createOscillator();
         var gain = ctx.createGain();
         osc.type = type || 'sine';
@@ -1107,41 +1233,35 @@
         osc.stop(ctx.currentTime + duration);
       } catch(e) {}
     }
-
     function playCorrectSound() {
       playTone(523.25, 0.08, 'sine', 0.06);
       setTimeout(function() { playTone(659.25, 0.06, 'sine', 0.04); }, 60);
     }
-
     function playWrongSound() {
       playTone(200, 0.15, 'sawtooth', 0.04);
     }
-
     function playCompleteSound() {
       var notes = [523.25, 659.25, 783.99, 1046.5];
       notes.forEach(function(n, i) {
         setTimeout(function() { playTone(n, 0.12, 'sine', 0.06); }, i * 100);
       });
     }
-
     function playClickSound() {
       playTone(800, 0.04, 'sine', 0.03);
     }
-
-    // === Sound toggle ===
     try { soundEnabled = localStorage.getItem('typeskill_sound') !== 'off'; } catch(e) {}
 
-    // === Lesson load ===
+    // ===== LESSON LOADING =====
     if (!lessonId) {
+      readyDiv.style.display = 'none';
       errorDiv.style.display = 'block';
       errorMsg.textContent = 'No lesson selected. Please choose a lesson from the lesson library.';
-      readyDiv.style.display = 'none';
     } else {
       lesson = (typeof LESSON_DATA !== 'undefined') ? LESSON_DATA.find(function(l) { return l.id === lessonId; }) : null;
       if (!lesson) {
+        readyDiv.style.display = 'none';
         errorDiv.style.display = 'block';
         errorMsg.textContent = 'Lesson "' + lessonId + '" not found. Please choose a lesson from the lesson library.';
-        readyDiv.style.display = 'none';
       } else {
         readyDiv.style.display = 'none';
         var lessonIdx = LESSON_DATA.indexOf(lesson);
@@ -1152,21 +1272,22 @@
       }
     }
 
+    // ===== INIT =====
     function initLesson() {
-      // Generate steps from practiceText
-      var text = lesson.practiceText || '';
-      steps = [];
-      for (var i = 0; i < text.length; i++) {
-        var ch = text[i];
-        var finger = (typeof FINGER_MAP !== 'undefined' && FINGER_MAP[ch]) ? FINGER_MAP[ch] : '';
-        steps.push({
-          char: ch,
-          display: ch === ' ' ? 'Space' : ch,
-          finger: finger,
-          instruction: finger ? ('Use your ' + (FINGER_LABELS[finger] || finger)) : 'Type this key'
-        });
+      steps = (typeof generateLessonSteps !== 'undefined') ? generateLessonSteps(lesson) : [];
+      if (steps.length === 0) {
+        var text = lesson.practiceText || '';
+        for (var i = 0; i < text.length; i++) {
+          var ch = text[i];
+          steps.push({
+            type: 'key',
+            target: ch,
+            display: ch === ' ' ? 'Space' : ch,
+            finger: (typeof FINGER_MAP !== 'undefined' && FINGER_MAP[ch]) ? FINGER_MAP[ch] : '',
+            instruction: FINGER_MAP[ch] ? 'Use your ' + (FINGER_LABELS[FINGER_MAP[ch]] || FINGER_MAP[ch]) : 'Type this key'
+          });
+        }
       }
-
       renderLesson();
       buildKeyboard();
       buildFingerGuide();
@@ -1178,7 +1299,7 @@
       bindKeydown();
     }
 
-    // === Render ===
+    // ===== RENDER LESSON =====
     function renderLesson() {
       var levelLabel = lesson.level ? lesson.level.charAt(0).toUpperCase() + lesson.level.slice(1) : 'Beginner';
       var levelBadge = '';
@@ -1188,11 +1309,11 @@
 
       content.innerHTML =
         '<div class="lp-header-card">' +
-          '<div class="lp-breadcrumb">' +
+          '<nav class="lp-breadcrumb" aria-label="Breadcrumb">' +
             '<a href="index.html">Home</a><span class="sep">›</span>' +
             '<a href="lessons.html">Lessons</a><span class="sep">›</span>' +
-            '<span class="current">' + escHtml(lesson.title) + '</span>' +
-          '</div>' +
+            '<span class="current" aria-current="page">' + escHtml(lesson.title) + '</span>' +
+          '</nav>' +
           '<div class="lp-title-row">' +
             '<h1>' + escHtml(lesson.title) + '</h1>' +
             levelBadge +
@@ -1200,19 +1321,19 @@
           '<p class="lp-desc">' + escHtml(lesson.description) + '</p>' +
           '<div class="lp-meta-row">' +
             '<span class="lp-meta-item">' +
-              '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>' +
+              '<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>' +
               'Level: ' + levelLabel +
             '</span>' +
             '<span class="lp-meta-item">' +
-              '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>' +
+              '<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>' +
               'Est: ' + (lesson.estimatedMinutes || 5) + ' min' +
             '</span>' +
             '<span class="lp-meta-item">' +
-              '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>' +
+              '<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>' +
               'Target: ' + (lesson.wpmTarget || 0) + ' WPM' +
             '</span>' +
             '<span class="lp-meta-item">' +
-              '<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>' +
+              '<svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>' +
               'Accuracy: &ge;' + (lesson.accuracyTarget || 80) + '%' +
             '</span>' +
           '</div>' +
@@ -1234,17 +1355,25 @@
         '</div>' +
 
         '<div class="lp-instruction-panel" id="lp-instruction-panel">' +
-          '<p class="lp-instruction-text" id="lp-instruction-text">Press <strong>Start Lesson</strong> to begin</p>' +
-          '<div class="lp-big-key lp-pulse" id="lp-big-key">' +
-            (steps.length > 0 ? escHtml(steps[0].display) : '-') +
+          '<p class="lp-instru-finger" id="lp-instru-finger">Press <strong>Start Lesson</strong> to begin</p>' +
+          '<div id="lp-target-area">' +
+            '<div class="lp-big-key lp-pulse" id="lp-big-key">' +
+              (steps.length > 0 ? escHtml(steps[0].type === 'key' ? steps[0].display : (steps[0].chars ? steps[0].chars[0].toUpperCase() : '-')) : '-') +
+            '</div>' +
           '</div>' +
-          '<p class="lp-key-hint" id="lp-key-hint">Press the highlighted key</p>' +
+          '<p class="lp-instru-target" id="lp-instru-target">Press the highlighted key</p>' +
           '<p class="lp-feedback" id="lp-feedback"></p>' +
+        '</div>' +
+
+        '<div class="lp-focus-panel" id="lp-focus-panel">' +
+          '<span class="lp-focus-icon">⌨️</span>' +
+          '<span class="lp-focus-text">Tap here to start typing</span>' +
+          '<span class="lp-focus-hint">Your keyboard input is captured here</span>' +
         '</div>' +
 
         '<div class="lp-stats-row" id="lp-stats-row">' +
           '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-wpm">0</span><span class="lp-stat-label">WPM</span></div>' +
-          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-acc">100%</span><span class="lp-stat-label">Accuracy</span></div>' +
+          '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-acc">0%</span><span class="lp-stat-label">Accuracy</span></div>' +
           '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-mistakes">0</span><span class="lp-stat-label">Mistakes</span></div>' +
           '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-streak">0</span><span class="lp-stat-label">Streak</span></div>' +
           '<div class="lp-stat-card"><span class="lp-stat-value" id="lp-stat-time">0:00</span><span class="lp-stat-label">Time</span></div>' +
@@ -1258,7 +1387,7 @@
           '<button class="lp-btn lp-btn-primary" id="lp-start-btn">Start Lesson</button>' +
           '<button class="lp-btn lp-btn-secondary" id="lp-pause-btn" style="display:none">Pause</button>' +
           '<button class="lp-btn lp-btn-outline" id="lp-restart-btn" style="display:none">Restart</button>' +
-          '<a href="lessons.html" class="lp-btn lp-btn-outline" id="lp-exit-btn" style="display:none">Exit</a>' +
+          '<a href="lessons.html" class="lp-btn lp-btn-outline" id="lp-exit-btn" style="display:none">Exit to Lessons</a>' +
         '</div>' +
 
         '<div class="lp-completion" id="lp-completion">' +
@@ -1279,12 +1408,12 @@
           '</div>' +
         '</div>';
 
-      // Re-bind sound toggle
+      // Re-bind sound toggle (since HTML was replaced)
       var soundBtn = $('lp-sound-btn');
       if (soundBtn) {
         soundBtn.addEventListener('click', function() {
           soundEnabled = !soundEnabled;
-          localStorage.setItem('typeskill_sound', soundEnabled ? 'on' : 'off');
+          try { localStorage.setItem('typeskill_sound', soundEnabled ? 'on' : 'off'); } catch(e) {}
           var icon = $('lp-sound-icon');
           if (icon) icon.textContent = soundEnabled ? '🔊' : '🔇';
           playClickSound();
@@ -1294,10 +1423,97 @@
 
     function escHtml(s) {
       if (!s) return '';
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // === Keyboard ===
+    // ===== TARGET / SEQUENCE DISPLAY =====
+    function getCurrentStep() {
+      if (pos < steps.length) return steps[pos];
+      return null;
+    }
+
+    function getCurrentChar() {
+      var step = getCurrentStep();
+      if (!step) return null;
+      if (step.type === 'key') return step.target;
+      if (step.type === 'sequence') return step.chars[subPos];
+      return null;
+    }
+
+    function getCurrentFinger() {
+      var ch = getCurrentChar();
+      if (!ch) return '';
+      return (typeof FINGER_MAP !== 'undefined' && FINGER_MAP[ch]) ? FINGER_MAP[ch] : '';
+    }
+
+    function updateTargetDisplay() {
+      var step = getCurrentStep();
+      var container = $('lp-target-area');
+      var instruFinger = $('lp-instru-finger');
+      var instruTarget = $('lp-instru-target');
+
+      if (!step) {
+        if (container) container.innerHTML = '<div class="lp-big-key">✓</div>';
+        if (instruFinger) instruFinger.textContent = 'Lesson complete!';
+        if (instruTarget) instruTarget.textContent = '';
+        return;
+      }
+
+      if (step.type === 'key') {
+        if (instruFinger) {
+          if (!isRunning) instruFinger.textContent = 'Press <strong>Start Lesson</strong> to begin';
+          else if (isPaused) instruFinger.textContent = 'Lesson paused. Press Resume to continue.';
+          else {
+            var fi = step.finger ? 'Use your ' + (FINGER_LABELS[step.finger] || step.finger) + ' to type:' : 'Type this key:';
+            instruFinger.innerHTML = fi;
+          }
+        }
+        if (container) {
+          var bigHtml = '<div class="lp-big-key' + (isRunning && !isPaused ? '' : ' lp-pulse') + '" id="lp-big-key">' + escHtml(step.display) + '</div>';
+          container.innerHTML = bigHtml;
+        }
+        if (instruTarget) {
+          if (!isRunning) instruTarget.textContent = 'Press the highlighted key';
+          else if (isPaused) instruTarget.textContent = '';
+          else instruTarget.textContent = 'Press the ' + step.display + ' key';
+        }
+      } else if (step.type === 'sequence') {
+        if (instruFinger) {
+          if (!isRunning) instruFinger.innerHTML = 'Press <strong>Start Lesson</strong> to begin';
+          else if (isPaused) instruFinger.textContent = 'Lesson paused. Press Resume to continue.';
+          else instruFinger.textContent = 'Type each character in order:';
+        }
+        if (container) {
+          if (!isRunning) {
+            container.innerHTML = '<div class="lp-big-key lp-pulse" id="lp-big-key">' + escHtml(step.chars[0].toUpperCase()) + '</div>';
+          } else if (isPaused) {
+            container.innerHTML = '<div class="lp-big-key" id="lp-big-key">⏸</div>';
+          } else {
+            var html = '<div class="lp-sequence-display">';
+            for (var i = 0; i < step.chars.length; i++) {
+              var ch = step.chars[i];
+              var cls = 'lp-seq-char';
+              if (i < subPos) cls += ' lp-seq-correct';
+              else if (i === subPos) cls += ' lp-seq-current';
+              if (ch === ' ') cls += ' lp-seq-space';
+              html += '<div class="' + cls + '">' + (ch === ' ' ? '␣' : escHtml(ch.toUpperCase())) + '</div>';
+            }
+            html += '</div>';
+            container.innerHTML = html;
+          }
+        }
+        if (instruTarget) {
+          if (!isRunning) instruTarget.textContent = 'Press the highlighted key';
+          else if (isPaused) instruTarget.textContent = '';
+          else {
+            var curCh = step.chars[subPos] || '';
+            instruTarget.textContent = 'Type: ' + (curCh === ' ' ? 'Space' : curCh.toUpperCase());
+          }
+        }
+      }
+    }
+
+    // ===== KEYBOARD =====
     function buildKeyboard() {
       var kb = $('lp-keyboard');
       if (!kb) return;
@@ -1331,16 +1547,18 @@
     }
 
     function highlightCurrentKey() {
-      var current = getCurrentStep();
+      var ch = getCurrentChar();
       Object.keys(keyElements).forEach(function(k) {
         var el = keyElements[k];
         el.classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
       });
-      if (current && current.char !== ' ') {
-        var lower = current.char.toLowerCase();
-        if (keyElements[lower]) {
-          keyElements[lower].classList.add('lp-key-target');
-        }
+      if (ch && ch !== ' ') {
+        var lower = ch.toLowerCase();
+        if (keyElements[lower]) keyElements[lower].classList.add('lp-key-target');
+      }
+      if (ch === ' ') {
+        var sk = document.querySelector('.lp-key-space');
+        if (sk) sk.classList.add('lp-key-target');
       }
     }
 
@@ -1352,46 +1570,43 @@
         setTimeout(function() {
           if (keyElements[lower]) {
             keyElements[lower].classList.remove('lp-key-' + type);
-            if (lower === (getCurrentStep() ? getCurrentStep().char.toLowerCase() : '')) {
+            if (lower === (getCurrentChar() || '').toLowerCase()) {
               keyElements[lower].classList.add('lp-key-target');
             }
           }
         }, 300);
       }
       if (ch === ' ') {
-        var spaceKey = document.querySelector('.lp-key-space');
-        if (spaceKey) {
-          spaceKey.classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
-          spaceKey.classList.add('lp-key-' + type);
+        var sk = document.querySelector('.lp-key-space');
+        if (sk) {
+          sk.classList.remove('lp-key-target', 'lp-key-correct', 'lp-key-wrong');
+          sk.classList.add('lp-key-' + type);
           setTimeout(function() {
-            spaceKey.classList.remove('lp-key-' + type);
-            if (getCurrentStep() && getCurrentStep().char === ' ') {
-              spaceKey.classList.add('lp-key-target');
-            }
+            sk.classList.remove('lp-key-' + type);
+            if (getCurrentChar() === ' ') sk.classList.add('lp-key-target');
           }, 300);
         }
       }
     }
 
-    // === Finger Guide ===
+    // ===== FINGER GUIDE =====
     function buildFingerGuide() {
       var guide = $('lp-finger-guide');
       if (!guide) return;
       guide.innerHTML = '';
-      var fingers = [
+      var leftFingers = [
         { id: 'left-pinky', label: 'Pinky' },
         { id: 'left-ring', label: 'Ring' },
         { id: 'left-middle', label: 'Middle' },
         { id: 'left-index', label: 'Index' }
       ];
-      // Left hand
       var leftDiv = document.createElement('div');
       leftDiv.className = 'lp-hand-side';
       var leftLabel = document.createElement('span');
       leftLabel.className = 'lp-hand-label';
       leftLabel.textContent = 'Left';
       leftDiv.appendChild(leftLabel);
-      fingers.forEach(function(f) {
+      leftFingers.forEach(function(f) {
         var dot = document.createElement('div');
         dot.className = 'lp-finger-dot';
         dot.id = 'lp-fd-' + f.id;
@@ -1402,20 +1617,16 @@
       var divider = document.createElement('div');
       divider.className = 'lp-finger-divider';
 
-      // Thumbs
       var thumbDiv = document.createElement('div');
       thumbDiv.style.display = 'flex';
       thumbDiv.style.alignItems = 'center';
       thumbDiv.style.gap = '0';
-
       var leftThumb = document.createElement('div');
       leftThumb.className = 'lp-thumb-area';
       leftThumb.id = 'lp-fd-thumb';
       leftThumb.innerHTML = '<div class="lp-finger-icon"></div><div class="lp-finger-name">Thumb</div>';
-
       thumbDiv.appendChild(leftThumb);
 
-      // Right hand
       var rightFingers = [
         { id: 'right-index', label: 'Index' },
         { id: 'right-middle', label: 'Middle' },
@@ -1444,74 +1655,21 @@
     }
 
     function updateFingerHighlight() {
-      var current = getCurrentStep();
+      var finger = getCurrentFinger();
       var allDots = document.querySelectorAll('.lp-finger-dot, .lp-thumb-area');
-      allDots.forEach(function(el) {
-        el.classList.remove('lp-finger-active');
-      });
-      if (current && current.finger) {
-        var targetEl = $('lp-fd-' + current.finger);
-        if (targetEl) {
-          targetEl.classList.add('lp-finger-active');
-        }
+      allDots.forEach(function(el) { el.classList.remove('lp-finger-active'); });
+      if (finger) {
+        var targetEl = $('lp-fd-' + finger);
+        if (targetEl) targetEl.classList.add('lp-finger-active');
       }
     }
 
-    // === Target Display ===
-    function getCurrentStep() {
-      if (pos < steps.length) return steps[pos];
-      return null;
-    }
-
-    function updateTargetDisplay() {
-      var current = getCurrentStep();
-      var bigKey = $('lp-big-key');
-      var instText = $('lp-instruction-text');
-      var keyHint = $('lp-key-hint');
-
-      if (!current) {
-        if (bigKey) bigKey.textContent = '✓';
-        if (instText) instText.textContent = 'Lesson complete!';
-        if (keyHint) keyHint.textContent = '';
-        return;
-      }
-
-      if (bigKey) {
-        bigKey.textContent = escHtml(current.display);
-        bigKey.className = 'lp-big-key';
-        if (!isRunning && !isFinished) {
-          bigKey.classList.add('lp-pulse');
-        }
-      }
-
-      if (instText) {
-        if (!isRunning) {
-          instText.textContent = 'Press Start Lesson to begin';
-        } else if (isPaused) {
-          instText.textContent = 'Lesson paused. Press Resume to continue.';
-        } else {
-          var fingerInfo = current.finger ? 'Use your ' + (FINGER_LABELS[current.finger] || current.finger) + ' to type:' : 'Type this key:';
-          instText.textContent = fingerInfo;
-        }
-      }
-
-      if (keyHint) {
-        if (!isRunning) {
-          keyHint.textContent = 'Press the highlighted key';
-        } else if (isPaused) {
-          keyHint.textContent = '';
-        } else {
-          keyHint.textContent = 'Press the ' + current.display + ' key';
-        }
-      }
-    }
-
+    // ===== PROGRESS =====
     function updateProgress() {
       var stepCurrent = $('lp-step-current');
       var stepTotal = $('lp-step-total');
       var progressPct = $('lp-progress-pct');
       var progressFill = $('lp-progress-fill');
-
       if (stepCurrent) stepCurrent.textContent = Math.min(pos + 1, steps.length);
       if (stepTotal) stepTotal.textContent = steps.length;
       var pct = steps.length > 0 ? Math.round(pos / steps.length * 100) : 0;
@@ -1519,11 +1677,11 @@
       if (progressFill) progressFill.style.width = pct + '%';
     }
 
+    // ===== STATS =====
     function updateStats() {
       var total = correctCount + incorrectCount;
-      var accuracy = total > 0 ? Math.round(correctCount / total * 100) : 100;
-      var elapsed = startTime ? (Date.now() - startTime) : 0;
-      var minutes = elapsed / 60000;
+      var accuracy = total > 0 ? Math.round(correctCount / total * 100) : 0;
+      var minutes = elapsedSeconds / 60;
       var wpm = minutes > 0 && correctCount > 0 ? Math.round((correctCount / 5) / minutes) : 0;
 
       var statWpm = $('lp-stat-wpm');
@@ -1540,6 +1698,7 @@
     }
 
     function formatTime(secs) {
+      if (typeof secs !== 'number' || isNaN(secs)) return '0:00';
       var m = Math.floor(secs / 60);
       var s = secs % 60;
       return m + ':' + (s < 10 ? '0' : '') + s;
@@ -1551,36 +1710,49 @@
       updateStats();
     }
 
-    // === Core Lesson Logic ===
+    // ===== LESSON LOGIC =====
     function processChar(typed) {
       if (isFinished || isPaused || !isRunning || pos >= steps.length) return;
 
-      var current = getCurrentStep();
-      if (!current) return;
-
-      var expected = current.char;
+      var expected = getCurrentChar();
+      if (expected === null || expected === undefined) return;
 
       if (typed === expected) {
         correctCount++;
         streak++;
         if (streak > bestStreak) bestStreak = streak;
-        // Visual feedback
-        var bigKey = $('lp-big-key');
-        if (bigKey) {
-          bigKey.className = 'lp-big-key lp-correct';
-          setTimeout(function() {
-            if (bigKey && !isFinished) {
-              bigKey.className = 'lp-big-key';
-              if (!isRunning) bigKey.classList.add('lp-pulse');
-            }
-          }, 300);
+
+        // Visual: big key or sequence
+        var step = getCurrentStep();
+        if (step && step.type === 'key') {
+          var bigKey = $('lp-big-key');
+          if (bigKey) {
+            bigKey.className = 'lp-big-key lp-correct';
+            setTimeout(function() {
+              if (bigKey && !isFinished) {
+                bigKey.className = 'lp-big-key';
+                if (!isRunning) bigKey.classList.add('lp-pulse');
+              }
+            }, 300);
+          }
         }
         flashKey(typed, 'correct');
         playCorrectSound();
         setFeedback('Correct!', 'correct');
         ariaLive.textContent = 'Correct';
         totalTyped++;
-        pos++;
+
+        // Advance
+        if (step && step.type === 'sequence') {
+          subPos++;
+          if (subPos >= step.chars.length) {
+            pos++;
+            subPos = 0;
+          }
+        } else {
+          pos++;
+        }
+
         updateProgress();
         highlightCurrentKey();
         updateFingerHighlight();
@@ -1593,21 +1765,37 @@
       } else {
         incorrectCount++;
         streak = 0;
-        // Visual feedback
-        var bigKey = $('lp-big-key');
-        if (bigKey) {
-          bigKey.className = 'lp-big-key lp-wrong';
-          setTimeout(function() {
-            if (bigKey && !isFinished) {
-              bigKey.className = 'lp-big-key';
-            }
-          }, 400);
+
+        var step = getCurrentStep();
+        if (step && step.type === 'key') {
+          var bigKey = $('lp-big-key');
+          if (bigKey) {
+            bigKey.className = 'lp-big-key lp-wrong';
+            setTimeout(function() {
+              if (bigKey && !isFinished) bigKey.className = 'lp-big-key';
+            }, 400);
+          }
+        } else if (step && step.type === 'sequence') {
+          // Flash wrong seq char
+          var seqChars = document.querySelectorAll('#lp-target-area .lp-seq-char');
+          if (seqChars[subPos]) {
+            seqChars[subPos].classList.remove('lp-seq-current');
+            seqChars[subPos].classList.add('lp-seq-wrong');
+            setTimeout(function() {
+              if (seqChars[subPos]) {
+                seqChars[subPos].classList.remove('lp-seq-wrong');
+                seqChars[subPos].classList.add('lp-seq-current');
+              }
+            }, 400);
+          }
         }
         flashKey(typed, 'wrong');
         playWrongSound();
-        var fingerTip = current.finger ? 'Use your ' + (FINGER_LABELS[current.finger] || current.finger) : 'Try again';
-        setFeedback('Try again — ' + fingerTip, 'wrong');
-        ariaLive.textContent = 'Incorrect. ' + fingerTip;
+        var fingerTip = FINGER_MAP && expected ? (FINGER_LABELS[FINGER_MAP[expected]] || '') : '';
+        var msg = 'Try again';
+        if (fingerTip) msg += ' - Use your ' + fingerTip;
+        setFeedback(msg, 'wrong');
+        ariaLive.textContent = 'Incorrect. ' + (fingerTip ? 'Use your ' + fingerTip : 'Try again');
         totalTyped++;
         updateStats();
       }
@@ -1621,26 +1809,29 @@
       if (type) el.classList.add(type);
     }
 
-    // === Lesson Flow ===
+    // ===== LESSON FLOW =====
     function startLesson() {
       if (isRunning) return;
       isRunning = true;
       isPaused = false;
       isFinished = false;
+      pos = 0;
+      subPos = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+      streak = 0;
+      bestStreak = 0;
+      totalTyped = 0;
       startTime = Date.now();
-      timerInterval = setInterval(function() {
-        updateTimer();
-      }, 200);
+      timerInterval = setInterval(function() { updateTimer(); }, 200);
       $('lp-start-btn').style.display = 'none';
       $('lp-pause-btn').style.display = '';
       $('lp-restart-btn').style.display = '';
       $('lp-exit-btn').style.display = '';
-      var bigKey = $('lp-big-key');
-      if (bigKey) bigKey.className = 'lp-big-key';
+      $('lp-focus-panel').classList.add('show');
       updateTargetDisplay();
       setFeedback('', '');
       ariaLive.textContent = 'Lesson started';
-      // Focus hidden input
       hiddenInput.focus();
     }
 
@@ -1657,11 +1848,8 @@
       if (!isPaused) return;
       isPaused = false;
       if (timerInterval) clearInterval(timerInterval);
-      // Adjust start time to account for pause duration
       startTime = Date.now() - elapsedSeconds * 1000;
-      timerInterval = setInterval(function() {
-        updateTimer();
-      }, 200);
+      timerInterval = setInterval(function() { updateTimer(); }, 200);
       pauseOverlay.classList.remove('show');
       ariaLive.textContent = 'Lesson resumed';
       updateTargetDisplay();
@@ -1673,6 +1861,7 @@
       isPaused = false;
       isFinished = false;
       pos = 0;
+      subPos = 0;
       correctCount = 0;
       incorrectCount = 0;
       streak = 0;
@@ -1680,16 +1869,14 @@
       totalTyped = 0;
       startTime = null;
       elapsedSeconds = 0;
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = null;
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
       pauseOverlay.classList.remove('show');
       $('lp-completion').classList.remove('show');
       $('lp-start-btn').style.display = '';
       $('lp-pause-btn').style.display = 'none';
       $('lp-restart-btn').style.display = 'none';
       $('lp-exit-btn').style.display = 'none';
-      var bigKey = $('lp-big-key');
-      if (bigKey) bigKey.className = 'lp-big-key lp-pulse';
+      $('lp-focus-panel').classList.remove('show');
       highlightCurrentKey();
       updateFingerHighlight();
       updateTargetDisplay();
@@ -1697,39 +1884,36 @@
       updateStats();
       setFeedback('', '');
       ariaLive.textContent = 'Lesson restarted';
-      hiddenInput.focus();
     }
 
     function finishLesson() {
       isFinished = true;
       isRunning = false;
-      if (timerInterval) clearInterval(timerInterval);
+      if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+      $('lp-focus-panel').classList.remove('show');
 
-      // Final stats
       var total = correctCount + incorrectCount;
       var accuracy = total > 0 ? Math.round(correctCount / total * 100) : 0;
-      var elapsed = startTime ? (Date.now() - startTime) : 0;
-      var minutes = elapsed / 60000;
-      var wpm = minutes > 0 ? Math.round((correctCount / 5) / minutes) : 0;
-      var finalTime = formatTime(elapsedSeconds);
+      var minutes = elapsedSeconds / 60;
+      var wpm = minutes > 0 && correctCount > 0 ? Math.round((correctCount / 5) / minutes) : 0;
 
-      // Update completion screen
       $('lp-res-wpm').textContent = wpm;
       $('lp-res-acc').textContent = accuracy + '%';
       $('lp-res-mistakes').textContent = incorrectCount;
       $('lp-res-streak').textContent = bestStreak;
 
-      // Show completion
       $('lp-completion').classList.add('show');
       $('lp-start-btn').style.display = 'none';
       $('lp-pause-btn').style.display = 'none';
       $('lp-restart-btn').style.display = 'none';
       $('lp-exit-btn').style.display = 'none';
-      $('lp-completion').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      setTimeout(function() {
+        var el = $('lp-completion');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
       playCompleteSound();
       ariaLive.textContent = 'Lesson completed. Accuracy: ' + accuracy + '%. WPM: ' + wpm;
-
-      // Save to localStorage
       saveProgress(lessonId, wpm, accuracy);
     }
 
@@ -1759,88 +1943,73 @@
       } catch(e) {}
     }
 
-    // === Controls ===
+    // ===== CONTROLS =====
     function bindControls() {
-      $('lp-start-btn').addEventListener('click', function() {
+      var startBtn = $('lp-start-btn');
+      var pauseBtn = $('lp-pause-btn');
+      var resumeBtn = $('lp-resume-btn');
+      var restartBtn = $('lp-restart-btn');
+      var restartPauseBtn = $('lp-restart-from-pause-btn');
+      var retryBtn = $('lp-retry-btn');
+      var nextBtn = $('lp-next-btn');
+      var focusPanel = $('lp-focus-panel');
+      var instruPanel = $('lp-instruction-panel');
+
+      if (startBtn) startBtn.addEventListener('click', function() { playClickSound(); startLesson(); });
+      if (pauseBtn) pauseBtn.addEventListener('click', function() { playClickSound(); pauseLesson(); });
+      if (resumeBtn) resumeBtn.addEventListener('click', function() { playClickSound(); resumeLesson(); });
+      if (restartBtn) restartBtn.addEventListener('click', function() { playClickSound(); restartLesson(); });
+      if (restartPauseBtn) restartPauseBtn.addEventListener('click', function() { playClickSound(); restartLesson(); });
+      if (retryBtn) retryBtn.addEventListener('click', function() { playClickSound(); restartLesson(); });
+      if (nextBtn) nextBtn.addEventListener('click', function() {
         playClickSound();
-        startLesson();
+        if (nextLesson) window.location.href = 'lesson-player.html?lesson=' + nextLesson.id;
       });
-      $('lp-pause-btn').addEventListener('click', function() {
-        playClickSound();
-        pauseLesson();
+
+      // Focus panel tap
+      if (focusPanel) focusPanel.addEventListener('click', function() {
+        if (isRunning && !isPaused && !isFinished) hiddenInput.focus();
       });
-      $('lp-resume-btn').addEventListener('click', function() {
-        playClickSound();
-        resumeLesson();
+      // Instruction panel tap
+      if (instruPanel) instruPanel.addEventListener('click', function() {
+        if (isRunning && !isPaused && !isFinished) hiddenInput.focus();
       });
-      $('lp-restart-btn').addEventListener('click', function() {
-        playClickSound();
-        restartLesson();
-      });
-      $('lp-restart-from-pause-btn').addEventListener('click', function() {
-        playClickSound();
-        restartLesson();
-      });
-      $('lp-retry-btn').addEventListener('click', function() {
-        playClickSound();
-        restartLesson();
-      });
-      if ($('lp-next-btn')) {
-        $('lp-next-btn').addEventListener('click', function() {
-          playClickSound();
-          if (nextLesson) {
-            window.location.href = 'lesson-player.html?lesson=' + nextLesson.id;
-          }
-        });
-      }
     }
 
-    // === Keydown ===
+    // ===== KEYDOWN =====
     function bindKeydown() {
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey || e.altKey || e.metaKey) return;
-        if (e.key === 'Tab') { return; }
+        if (e.key === 'Tab') return;
         if (e.key === 'Escape') {
-          if (isPaused) {
-            resumeLesson();
-            e.preventDefault();
-          }
+          if (isPaused) { resumeLesson(); e.preventDefault(); }
           return;
         }
-
         if (!isRunning || isPaused || isFinished) return;
 
-        // Only process single character keys
         if (e.key.length === 1) {
           e.preventDefault();
           processChar(e.key);
         } else if (e.key === ' ') {
           e.preventDefault();
           processChar(' ');
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          processChar('\n');
         }
       });
 
       // Hidden input fallback for mobile
       hiddenInput.addEventListener('input', function() {
-        if (!isRunning || isPaused || isFinished) return;
+        if (!isRunning || isPaused || isFinished) { hiddenInput.value = ''; return; }
         var val = hiddenInput.value;
         if (val.length > 0) {
-          if (!isRunning) { hiddenInput.value = ''; return; }
           var ch = val.slice(-1);
           hiddenInput.value = '';
           if (ch) processChar(ch);
         }
       });
 
-      // Focus hidden input when clicking instruction area
-      var instructionPanel = $('lp-instruction-panel');
-      if (instructionPanel) {
-        instructionPanel.addEventListener('click', function() {
-          if (isRunning && !isPaused && !isFinished) {
-            hiddenInput.focus();
-          }
-        });
-      }
     }
 
   })();

@@ -437,3 +437,66 @@ var LESSON_DATA = [
     estimatedMinutes: 12
   }
 ];
+
+// Generate lesson steps from practice text
+// Groups characters into short sequences for a more guided experience
+function generateLessonSteps(lesson) {
+  if (lesson.steps && lesson.steps.length > 0) return lesson.steps;
+  var text = lesson.practiceText || '';
+  var chars = text.split('');
+  var steps = [];
+  var buffer = [];
+
+  function flushBuffer() {
+    if (buffer.length === 0) return;
+    if (buffer.length === 1) {
+      var c = buffer[0];
+      steps.push({
+        type: 'key',
+        target: c,
+        display: c === ' ' ? 'Space' : c.toUpperCase(),
+        finger: FINGER_MAP[c] || '',
+        instruction: FINGER_MAP[c] ? 'Use your ' + FINGER_LABELS[FINGER_MAP[c]] : 'Type this key'
+      });
+    } else {
+      steps.push({
+        type: 'sequence',
+        chars: buffer.slice(),
+        display: buffer.map(function(x) { return x === ' ' ? 'Space' : x.toUpperCase(); }).join(' '),
+        instruction: 'Type this sequence'
+      });
+    }
+    buffer = [];
+  }
+
+  for (var i = 0; i < chars.length; i++) {
+    var ch = chars[i];
+    if (ch === ' ') {
+      flushBuffer();
+      steps.push({
+        type: 'key',
+        target: ' ',
+        display: 'Space',
+        finger: 'thumb',
+        instruction: 'Use your Thumb'
+      });
+    } else {
+      buffer.push(ch);
+      if (buffer.length >= 5) flushBuffer();
+    }
+  }
+  flushBuffer();
+
+  // If no steps were generated, create a placeholder
+  if (steps.length === 0) {
+    steps.push({
+      type: 'key',
+      target: 'a',
+      display: 'A',
+      finger: 'left-pinky',
+      instruction: 'Use your Left Pinky'
+    });
+  }
+
+  return steps;
+}
