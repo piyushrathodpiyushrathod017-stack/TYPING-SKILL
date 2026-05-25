@@ -7,14 +7,5 @@
 # Ensure clean URLs
 /index.html  /  301
 
-# Extensionless page access
-/lesson-player  /lesson-player.html  200
-/speed-test  /speed-test.html  200
-/typing-practice  /typing-practice.html  200
-/typing-games  /typing-games.html  200
-/lessons  /lessons.html  200
-/blog  /blog.html  200
-/dashboard  /student-dashboard.html  200
-/certificate  /certificate.html  200
-/accuracy-test  /accuracy-test.html  200
-/beginner-course  /beginner-course.html  200
+# Direct extensionless access — Cloudflare Pages auto-serves .html files.
+# No rewrite rules needed; they conflict with auto-detection and create redirect loops.
